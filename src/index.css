@@ -319,11 +319,15 @@ textarea {
 .marquee-row__track-wrapper {
   display: flex;
   width: max-content;
-  animation: marquee-scroll-left 4s cubic-bezier(.64, 0, .29, .9)infinite;
+  animation: marquee-scroll-left 25s linear infinite;
 }
 
 .marquee-row__track-wrapper--reverse {
-  animation: marquee-scroll-right 4s cubic-bezier(.64, 0, .29, .9) infinite;
+  animation: marquee-scroll-right 25s linear infinite;
+}
+
+.marquee-row:hover .marquee-row__track-wrapper {
+  animation-play-state: paused;
 }
 
 .marquee-row__track {
@@ -358,13 +362,13 @@ textarea {
 /* Ribbons styling with gradient overlays and rotations */
 .primary-tape-bg {
   background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
-  transform: rotate(-2deg) scale(1.05);
+  transform: rotate(-3.5deg) scale(1.05);
   box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.4);
 }
 
 .secondary-tape-bg {
   background: linear-gradient(135deg, #10B981 0%, #047857 100%);
-  transform: rotate(2deg) scale(1.05);
+  transform: rotate(3.5deg) scale(1.05);
   box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.4);
 }
 
@@ -375,6 +379,20 @@ textarea {
   font-weight: 900;
   display: inline-block;
   padding: 0.25rem 0.5rem;
+}
+
+/* Base Accessibility styles for prefers-reduced-motion configuration */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-row__track-wrapper,
+  .marquee-row__track-wrapper--reverse,
+  .animate-float-near,
+  .animate-float-far,
+  .animate-float-mid,
+  .animate-scan {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .tape-separator-icon svg {

@@ -121,7 +121,9 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
             {/* Mobile Hamburger */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`md:hidden w-10 h-10 rounded-xl flex items-center justify-center cursor-pointer ${isBlue ? "text-white hover:bg-white/10" : "text-slate-600 dark:text-slate-200"
+              aria-label={isOpen ? (language === "ar" ? "إغلاق القائمة" : "Close Menu") : (language === "ar" ? "فتح القائمة" : "Open Menu")}
+              aria-expanded={isOpen}
+              className={`md:hidden w-10 h-10 rounded-xl flex items-center justify-center cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${isBlue ? "text-white hover:bg-white/10" : "text-slate-600 dark:text-slate-200"
                 }`}
               style={!isBlue ? { background: "rgba(0, 82, 255, 0.05)" } : undefined}
             >

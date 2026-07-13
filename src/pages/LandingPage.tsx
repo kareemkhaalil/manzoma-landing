@@ -100,6 +100,11 @@ export default function LandingPage() {
     document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);
 
+  useEffect(() => {
+    document.documentElement.lang = language === "en" ? "en" : "ar";
+    document.documentElement.dir = language === "en" ? "ltr" : "rtl";
+  }, [language]);
+
   const toggleTheme = () => {
     setTheme(isDark ? "light" : "dark");
   };
@@ -227,8 +232,12 @@ export default function LandingPage() {
       dir={isAr ? "rtl" : "ltr"}
     >
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.035] dark:opacity-[0.07]"
-        style={{ backgroundImage: `url("${config.patternUrl || "/cdn/patternBlue.png"}")`, backgroundSize: "720px auto", backgroundPosition: "center top" }}
+        className="absolute inset-0 pointer-events-none opacity-[0.25] dark:opacity-[0.4]"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
+          backgroundSize: "24px 24px",
+          color: isDark ? "rgba(99, 102, 241, 0.07)" : "rgba(31, 65, 173, 0.05)"
+        }}
         aria-hidden="true"
       />
       {/* ────────────────────────────────────────────────────────
@@ -1424,7 +1433,9 @@ export default function LandingPage() {
                 >
                   <button
                     onClick={() => setOpenFAQ(isOpen ? null : i)}
-                    className={`w-full flex items-center justify-between p-6 ${isAr ? "text-right" : "text-left"} cursor-pointer outline-none`}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${i}`}
+                    className={`w-full flex items-center justify-between p-6 ${isAr ? "text-right" : "text-left"} cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 rounded-t-[1.8rem]`}
                   >
                     <span className="font-black text-sm sm:text-base text-slate-800 dark:text-white">{faq.q}</span>
                     <ChevronDown
@@ -1437,6 +1448,9 @@ export default function LandingPage() {
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
+                        id={`faq-answer-${i}`}
+                        role="region"
+                        aria-labelledby={`faq-question-${i}`}
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}

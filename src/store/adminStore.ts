@@ -428,7 +428,7 @@ export const useAdminStore = create<AdminState>()(
           id: "admin-1",
           name: "المدير العام",
           email: "admin@manzoma.com",
-          password: "admin123",
+          password: "",
           role: "super_admin"
         }
       ],
