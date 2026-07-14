@@ -31,7 +31,7 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
   const links = [
     { to: "/#features", label: t.features },
     { to: "/#pricing", label: t.pricing },
-    { to: "/integration", label: language === "ar" ? "الربط والتكامل" : "Integrations" },
+    { to: "/academy", label: t.academy },
     { to: "/blog", label: language === "ar" ? "المدونة" : "Blog" },
   ];
 

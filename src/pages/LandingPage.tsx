@@ -220,8 +220,8 @@ export default function LandingPage() {
   const [activeSegment, setActiveSegment] = useState<"pos" | "matrix" | "wholesale">("pos");
   const segmentsList = [
     { id: "pos", label: isAr ? "نقاط البيع والتجزئة" : "Retail & POS", desc: isAr ? "إدارة مبيعات المحلات والفروع" : "Retail stores & branches sales", bg: "from-blue-500/10 to-indigo-500/10" },
-    { id: "matrix", label: isAr ? "الورش والمصانع الصغيرة" : "Manufacturing BOM", desc: isAr ? "تتبع تكلفة التصنيع والمواد الخام" : "Bill of materials & product costing", bg: "from-emerald-500/10 to-teal-500/10" },
-    { id: "wholesale", label: isAr ? "الشركات والموزعون" : "Wholesale & Credit", desc: isAr ? "جدولة الديون وعمولات المندوبين" : "Debits ledger & rep commissions", bg: "from-rose-500/10 to-amber-500/10" }
+    { id: "matrix", label: isAr ? "الورش والمصانع الصغيرة" : "Workshops & Manufacturing", desc: isAr ? "تتبع تكلفة التصنيع والمواد الخام" : "Product costing & materials tracking", bg: "from-emerald-500/10 to-teal-500/10" },
+    { id: "wholesale", label: isAr ? "الشركات والموزعون" : "Wholesale & Distributors", desc: isAr ? "جدولة الديون وعمولات المندوبين" : "Debt tracking & sales commissions", bg: "from-rose-500/10 to-amber-500/10" }
   ];
 
   return (
@@ -250,16 +250,18 @@ export default function LandingPage() {
         {/* Floating parallax backdrop shapes */}
         <motion.div
           style={{ y: springBlob1 }}
-          className="absolute top-24 left-[10%] w-[380px] h-[380px] rounded-full bg-gradient-to-tr from-[#1F41AD]/8 to-indigo-500/3 blur-[100px] pointer-events-none -z-10"
+          className="absolute top-24 left-[10%] w-[380px] h-[380px] rounded-full bg-gradient-to-tr from-[#1F41AD]/8 to-indigo-500/3 blur-[100px] pointer-events-none -z-10 animate-gradient"
         />
         <motion.div
           style={{ y: springBlob2 }}
-          className="absolute top-[600px] right-[5%] w-[420px] h-[420px] rounded-full bg-gradient-to-br from-[#10B981]/6 to-emerald-400/2 blur-[120px] pointer-events-none -z-10"
+          className="absolute top-[600px] right-[5%] w-[420px] h-[420px] rounded-full bg-gradient-to-br from-[#10B981]/6 to-emerald-400/2 blur-[120px] pointer-events-none -z-10 animate-gradient"
         />
         <motion.div
           style={{ y: springBlob3 }}
-          className="absolute top-[1200px] left-[5%] w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-[#F43F5E]/6 to-rose-400/2 blur-[100px] pointer-events-none -z-10"
+          className="absolute top-[1200px] left-[5%] w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-[#F43F5E]/6 to-rose-400/2 blur-[100px] pointer-events-none -z-10 animate-gradient"
         />
+        {/* Mesh Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-slate-50 to-emerald-500/5 dark:from-indigo-950/20 dark:via-[#060814] dark:to-emerald-950/10 pointer-events-none -z-20 opacity-80" />
 
         {/* Hero Content */}
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -359,99 +361,108 @@ export default function LandingPage() {
             <motion.div
               initial={{ opacity: 0, x: isAr ? 60 : -60, y: -40, rotateZ: -6 }}
               animate={{ opacity: 0.9, x: isAr ? 40 : -40, y: -30, rotateZ: -4 }}
-              transition={{ duration: 1, ease }}
-              whileHover={{ y: -8, rotateZ: 0, z: 50, transition: { duration: 0.3 } }}
-              className="absolute top-4 left-4 z-10 w-full max-w-[280px] rounded-3xl p-6 glass-card border border-slate-100/50 shadow-2xl text-slate-800 space-y-4 animate-float-far cursor-pointer"
-              style={{ transformStyle: "preserve-3d" }}
+              transition={{ duration: 1.2, ease }}
+              className="absolute top-4 left-4 z-10 w-full max-w-[280px] cursor-pointer"
             >
-              <div className="flex justify-between items-center">
-                <span className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                  <Lock className="w-4 h-4" />
-                </span>
-                <span className="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full font-black flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  {isAr ? "وردية مؤمنة" : "Register Safe"}
-                </span>
-              </div>
-              <div className="space-y-1">
-                <div className="text-[10px] text-slate-400 font-bold uppercase">{isAr ? "الوردية الحالية" : "Current Shift"}</div>
-                <div className="text-sm font-black text-slate-800">{isAr ? "وردية 1 | كاشير رئيسي" : "Shift 1 | Main Register"}</div>
-              </div>
-              <div className="flex justify-between items-center pt-2 border-t border-slate-50 text-xs">
-                <span className="text-slate-400 font-medium">{isAr ? "مستخدم:" : "User:"}</span>
-                <span className="font-bold text-slate-700">{isAr ? "كريم خليل" : "Kareem K."}</span>
+              <div 
+                className="w-full rounded-3xl p-6 glass-card border border-slate-100/50 shadow-[0_20px_50px_rgba(0,0,0,0.12)] text-slate-800 space-y-4 animate-float-far hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.22)] hover:-translate-y-2 transition-all duration-300"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                <div className="flex justify-between items-center">
+                  <span className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <Lock className="w-4 h-4" />
+                  </span>
+                  <span className="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full font-black flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    {isAr ? "وردية مؤمنة" : "Register Safe"}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-[10px] text-slate-400 font-bold uppercase">{isAr ? "الوردية الحالية" : "Current Shift"}</div>
+                  <div className="text-sm font-black text-slate-800">{isAr ? "وردية 1 | كاشير رئيسي" : "Shift 1 | Main Register"}</div>
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t border-slate-50 text-xs">
+                  <span className="text-slate-400 font-medium">{isAr ? "مستخدم:" : "User:"}</span>
+                  <span className="font-bold text-slate-700">{isAr ? "كريم خليل" : "Kareem K."}</span>
+                </div>
               </div>
             </motion.div>
 
             {/* Mockup Card 2: Main Sales metrics (Central card - Foreground with tilt) */}
             <motion.div
-              initial={{ opacity: 0, y: 40, rotateX: 10, rotateY: -10 }}
-              animate={{ opacity: 1, y: 0, rotateX: 12, rotateY: -12 }}
-              transition={{ duration: 1, delay: 0.2, ease }}
-              whileHover={{ y: -20, rotateX: 0, rotateY: 0, z: 120, scale: 1.05, transition: { duration: 0.3 } }}
-              className="absolute z-25 w-full max-w-[330px] rounded-3xl p-6 glass-dark border border-slate-800/80 shadow-2xl text-white space-y-6 animate-float-mid cursor-pointer"
-              style={{ transformStyle: "preserve-3d" }}
+              initial={{ opacity: 0, y: 80, scale: 0.85, rotateX: 10, rotateY: -10 }}
+              animate={{ opacity: 1, y: 0, scale: 1, rotateX: 12, rotateY: -12 }}
+              transition={{ duration: 1.4, delay: 0.15, ease }}
+              className="absolute z-25 w-full max-w-[330px] cursor-pointer"
             >
-              {/* Scan line effect overlay */}
-              <div className="absolute inset-0 w-full h-[2px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-40 top-0 animate-scan pointer-events-none" />
+              <div 
+                className="w-full rounded-3xl p-6 glass-dark border border-slate-850/80 shadow-[0_30px_60px_-10px_rgba(0,0,0,0.3)] text-white space-y-6 animate-float-mid hover:shadow-[0_40px_80px_-10px_rgba(99,102,241,0.25)] hover:-translate-y-3 transition-all duration-300"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                {/* Scan line effect overlay */}
+                <div className="absolute inset-0 w-full h-[2px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-40 top-0 animate-scan pointer-events-none" />
 
-              <div className="flex justify-between items-center">
-                <div>
-                  <span className="text-[10px] text-slate-400 font-bold block">{isAr ? "إجمالي مبيعات اليوم" : "Today's Revenue"}</span>
-                  <span className="text-2xl font-black font-sans tracking-tight">3,050.00 <span className="text-xs text-slate-400">ج.م</span></span>
-                </div>
-                <span className="w-10 h-10 rounded-2xl bg-indigo-600/30 text-indigo-400 flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5" />
-                </span>
-              </div>
-              
-              {/* Animated mini chart columns */}
-              <div className="h-14 flex items-end gap-1.5">
-                {[35, 60, 48, 75, 50, 90, 65, 80, 100, 70].map((h, i) => (
-                  <div key={i} className="flex-1 bg-slate-800 rounded-t-md h-full relative overflow-hidden">
-                    <motion.div
-                      initial={{ height: 0 }}
-                      animate={{ height: `${h}%` }}
-                      transition={{ duration: 1, delay: 0.4 + i * 0.05 }}
-                      className="absolute bottom-0 inset-x-0 bg-indigo-500"
-                    />
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="text-[10px] text-slate-400 font-bold block">{isAr ? "إجمالي مبيعات اليوم" : "Today's Revenue"}</span>
+                    <span className="text-2xl font-black font-sans tracking-tight">3,050.00 <span className="text-xs text-slate-400">ج.م</span></span>
                   </div>
-                ))}
-              </div>
+                  <span className="w-10 h-10 rounded-2xl bg-indigo-600/30 text-indigo-400 flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5" />
+                  </span>
+                </div>
+                
+                {/* Animated mini chart columns */}
+                <div className="h-14 flex items-end gap-1.5">
+                  {[35, 60, 48, 75, 50, 90, 65, 80, 100, 70].map((h, i) => (
+                    <div key={i} className="flex-1 bg-slate-800 rounded-t-md h-full relative overflow-hidden">
+                      <motion.div
+                        initial={{ height: 0 }}
+                        animate={{ height: `${h}%` }}
+                        transition={{ duration: 1, delay: 0.4 + i * 0.05 }}
+                        className="absolute bottom-0 inset-x-0 bg-indigo-500"
+                      />
+                    </div>
+                  ))}
+                </div>
 
-              <div className="flex justify-between items-center text-[10px] pt-1 text-slate-400 font-bold">
-                <span>{isAr ? "حالة مزامنة الفروع" : "Branch Sync Queue"}</span>
-                <span className="text-emerald-400 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  {isAr ? "تمت المزامنة 100%" : "Synced 100%"}
-                </span>
+                <div className="flex justify-between items-center text-[10px] pt-1 text-slate-400 font-bold">
+                  <span>{isAr ? "حالة مزامنة الفروع" : "Branch Sync Queue"}</span>
+                  <span className="text-emerald-400 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    {isAr ? "تمت المزامنة 100%" : "Synced 100%"}
+                  </span>
+                </div>
               </div>
             </motion.div>
 
             {/* Mockup Card 3: WhatsApp Sent Logs (Near / Closest to Camera) */}
             <motion.div
-              initial={{ opacity: 0, x: isAr ? -60 : 60, y: 60, rotateZ: 5 }}
-              animate={{ opacity: 1, x: isAr ? -20 : 20, y: 30, rotateZ: 4 }}
-              transition={{ duration: 1, delay: 0.3, ease }}
-              whileHover={{ y: -8, rotateZ: 0, z: 150, scale: 1.03, transition: { duration: 0.3 } }}
-              className="absolute bottom-4 right-4 z-30 w-full max-w-[270px] rounded-3xl p-5 bg-white border border-slate-100 shadow-2xl text-slate-800 space-y-3.5 animate-float-near cursor-pointer"
-              style={{ transformStyle: "preserve-3d" }}
+              initial={{ opacity: 0, x: isAr ? -60 : 60, y: 60, scale: 0.85, rotateZ: 5 }}
+              animate={{ opacity: 1, x: isAr ? -20 : 20, y: 30, scale: 1, rotateZ: 4 }}
+              transition={{ duration: 1.4, delay: 0.3, ease }}
+              className="absolute z-30 w-full max-w-[270px] cursor-pointer"
             >
-              <div className="flex justify-between items-center text-xs">
-                <span className="font-black text-slate-900 flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                  {isAr ? "تقارير الواتساب" : "WhatsApp Logs"}
-                </span>
-                <span className="text-[10px] text-slate-400">2 min ago</span>
-              </div>
-              <div className="space-y-2">
-                <div className="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center text-[11px]">
-                  <span className="font-bold text-slate-700">{isAr ? "قميص كاجوال رجالي" : "Men shirt"}</span>
-                  <span className="text-[#1F41AD] font-black">💬 {isAr ? "تم الإرسال" : "Sent"}</span>
+              <div 
+                className="w-full rounded-3xl p-5 bg-white border border-slate-100 shadow-[0_25px_50px_rgba(0,0,0,0.15)] text-slate-800 space-y-3.5 animate-float-near hover:shadow-[0_35px_70px_-15px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-300"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                <div className="flex justify-between items-center text-xs">
+                  <span className="font-black text-slate-900 flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                    {isAr ? "تقارير الواتساب" : "WhatsApp Logs"}
+                  </span>
+                  <span className="text-[10px] text-slate-400">2 min ago</span>
                 </div>
-                <div className="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center text-[11px]">
-                  <span className="font-bold text-slate-700">{isAr ? "بنطلون جينز" : "Jeans pants"}</span>
-                  <span className="text-[#1F41AD] font-black">💬 {isAr ? "تم الإرسال" : "Sent"}</span>
+                <div className="space-y-2">
+                  <div className="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center text-[11px]">
+                    <span className="font-bold text-slate-700">{isAr ? "قميص كاجوال رجالي" : "Men shirt"}</span>
+                    <span className="text-[#1F41AD] font-black">💬 {isAr ? "تم الإرسال" : "Sent"}</span>
+                  </div>
+                  <div className="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center text-[11px]">
+                    <span className="font-bold text-slate-700">{isAr ? "بنطلون جينز" : "Jeans pants"}</span>
+                    <span className="text-[#1F41AD] font-black">💬 {isAr ? "تم الإرسال" : "Sent"}</span>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -463,7 +474,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          2. PARTNERS LOGOS BAR (Modern clean brand outline grid)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-12 bg-white border-y border-slate-100 overflow-hidden">
+      <section className="py-12 bg-white border-y border-slate-100 overflow-hidden blur-reveal">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 text-center space-y-6">
           <p className="text-[11px] uppercase tracking-widest text-slate-400 font-extrabold">
             {isAr ? "طرق الدفع المدعومة وشركاء النجاح في السوق المصري" : "Supported payments & merchant networks"}
@@ -502,9 +513,42 @@ export default function LandingPage() {
       </section>
 
       {/* ────────────────────────────────────────────────────────
+         2.5 DIAGONAL MARQUEE RIBBONS (Tilted ribbon feature)
+         ──────────────────────────────────────────────────────── */}
+      <section className="py-20 relative overflow-hidden taps-with-rotate select-none">
+        {/* Row 1: Left scrolling (Primary Tape) */}
+        <div className="marquee-row primary-tape-bg z-10 relative">
+          <div className="marquee-row__track-wrapper">
+            <div className="marquee-row__track">
+              {((t.tapeItems || []) as string[]).concat((t.tapeItems || []) as string[]).concat((t.tapeItems || []) as string[]).map((item: string, idx: number) => (
+                <React.Fragment key={idx}>
+                  <span className="marquee-item text-lg md:text-xl">{item}</span>
+                  <span className="tape-separator-icon text-white/50">✦</span>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Row 2: Right scrolling (Secondary Tape) */}
+        <div className="marquee-row secondary-tape-bg z-10 relative mt-8">
+          <div className="marquee-row__track-wrapper marquee-row__track-wrapper--reverse">
+            <div className="marquee-row__track">
+              {((t.tapeItems || []) as string[]).concat((t.tapeItems || []) as string[]).concat((t.tapeItems || []) as string[]).map((item: string, idx: number) => (
+                <React.Fragment key={idx}>
+                  <span className="marquee-item text-lg md:text-xl">{item}</span>
+                  <span className="tape-separator-icon text-white/50">✦</span>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────────────────────────────────────────
          3. SEGMENTS INTERACTIVE WIDGET (Image 2 style layout picker)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-12">
+      <section className="py-24 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-12 blur-reveal">
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "تغطية كاملة لنشاطك" : "Targeted Industry Fit"}
@@ -535,9 +579,9 @@ export default function LandingPage() {
                 
                 <div className="space-y-2">
                   <h3 className="text-2xl font-black text-slate-900 dark:text-white">
-                    {activeSegment === "pos" && (isAr ? "إدارة مبيعات التجزئة ونقاط الكاشير" : "Retail & POS Drawer Sales")}
-                    {activeSegment === "matrix" && (isAr ? "إدارة خامات التصنيع وحساب تكلفة الـ BOM" : "Small Factories & BOM Costing")}
-                    {activeSegment === "wholesale" && (isAr ? "كشوف حسابات الموزعين وعمولات المناديب" : "Distributors Ledgers & Rep Payouts")}
+                    {activeSegment === "pos" && (isAr ? "إدارة مبيعات التجزئة ونقاط الكاشير" : "Retail & POS Sales")}
+                    {activeSegment === "matrix" && (isAr ? "حساب تكلفة الإنتاج وتكاليف التصنيع تلقائياً" : "Manufacturing & product costing")}
+                    {activeSegment === "wholesale" && (isAr ? "متابعة ديون العملاء وعمولات البائعين" : "Customer debt tracking & sales commissions")}
                   </h3>
                   <p className="text-sm font-medium leading-relaxed text-slate-500 dark:text-slate-400">
                     {activeSegment === "pos" && t.showcaseFeatures?.pos?.desc}
@@ -548,10 +592,10 @@ export default function LandingPage() {
 
                 <ul className="space-y-3 pt-2">
                   {(activeSegment === "pos"
-                    ? [isAr ? "توليد تلقائي للباركود والملصقات" : "Instant barcode tags generation", isAr ? "دعم كامل للموازين الإلكترونية" : "Electronic weights integration", isAr ? "مراقبة الورديات عن بعد لحظة بلحظة" : "Remote registers audits log"]
+                    ? [isAr ? "توليد تلقائي للباركود والملصقات" : "Instant barcode tags generation", isAr ? "دعم كامل للموازين الإلكترونية" : "Electronic weights integration", isAr ? "مراقبة الورديات عن بعد لحظة بلحظة" : "Live remote shifts monitoring"]
                     : activeSegment === "matrix"
-                    ? [isAr ? "احتساب آلي لتكلفة المنتج بناءً على الخامات" : "Automated BOM product pricing", isAr ? "تنبيهات نقص مخزون الخامات الأساسية" : "Raw material shortage alerts", isAr ? "تتبع جرد مراحل التصنيع المختلفة" : "Work-in-progress inventory tracker"]
-                    : [isAr ? "كشوف حسابات دين مفصلة للعملاء الموردين" : "Vendor debit ledgers integration", isAr ? "احتساب تلقائي لنسب وعمولات البائعين" : "Automated seller commission tracker", isAr ? "جدولة دفعات الموردين والأقساط" : "Installments scheduling systems"]
+                    ? [isAr ? "احتساب آلي لتكلفة المنتج بناءً على الخامات" : "Automated product pricing based on materials", isAr ? "تنبيهات نقص مخزون الخامات الأساسية" : "Raw material shortage alerts", isAr ? "تتبع جرد مراحل التصنيع المختلفة" : "Work-in-progress inventory tracker"]
+                    : [isAr ? "متابعة حسابات الديون والعملاء الموردين" : "Vendor debt and account tracking", isAr ? "احتساب تلقائي لنسب وعمولات البائعين" : "Automated seller commission tracker", isAr ? "جدولة دفعات الموردين والأقساط" : "Installments scheduling systems"]
                   ).map((item, idx) => (
                     <li key={idx} className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-350">
                       <span className="w-5 h-5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600 flex items-center justify-center shrink-0">
@@ -657,10 +701,17 @@ export default function LandingPage() {
         </div>
 
         {/* Bento Grid layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
+        >
           
           {/* Card 1: Offline-First (Span 7) */}
           <motion.div
+            variants={fadeUp}
             whileHover={{ y: -6 }}
             className="lg:col-span-7 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0D0C14] p-8 md:p-10 shadow-lg flex flex-col justify-between space-y-8 relative overflow-hidden bento-card"
           >
@@ -742,6 +793,7 @@ export default function LandingPage() {
 
           {/* Card 2: WhatsApp Invoices (Span 5) */}
           <motion.div
+            variants={fadeUp}
             whileHover={{ y: -6 }}
             className="lg:col-span-5 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0D0C14] p-8 shadow-lg flex flex-col justify-between space-y-8 relative overflow-hidden bento-card"
           >
@@ -796,28 +848,29 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Card 3: Clothes matrix coding (Span 5) */}
+          {/* Card 3: Clothes variations (Span 5) */}
           <motion.div
+            variants={fadeUp}
             whileHover={{ y: -6 }}
             className="lg:col-span-5 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0D0C14] p-8 shadow-lg flex flex-col justify-between space-y-8 relative overflow-hidden bento-card"
           >
             <div className="bento-spotlight" />
             <div className="space-y-4 relative z-10">
               <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 dark:bg-indigo-950 px-3 py-1 rounded-full">
-                Matrix Generator
+                Sizes & Colors
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
                 {config?.features?.[5]?.title || "التكويد الذكي للملابس"}
               </h3>
               <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
-                {config?.features?.[5]?.description || "توليد مصفوفة المقاسات والألوان وطباعة الباركود (Matrix Generator) في ثوانٍ دون تكرار إدخال المنتجات."}
+                {isAr ? "توليد المقاسات والألوان المختلفة للمنتج وطباعة باركود لكل منها بضغطة واحدة." : "Generate size and color variations easily with instant barcode tags for easy retail management."}
               </p>
             </div>
 
             {/* Matrix item generator mockup */}
             <div className="p-4 bg-slate-50 dark:bg-white/[0.02] rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4 text-xs z-10">
               <div className="flex flex-col gap-2">
-                <span className="font-black text-slate-700 dark:text-slate-350">{isAr ? "توليد مقاسات وألوان صنف" : "Generate Product Matrix"}</span>
+                <span className="font-black text-slate-700 dark:text-slate-350">{isAr ? "توليد مقاسات وألوان صنف" : "Generate Product Variations"}</span>
                 
                 {/* Size chips */}
                 <div className="flex flex-wrap gap-1">
@@ -870,19 +923,20 @@ export default function LandingPage() {
 
           {/* Card 4: Z-Report Audit Shift drawer (Span 7) */}
           <motion.div
+            variants={fadeUp}
             whileHover={{ y: -6 }}
             className="lg:col-span-7 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0D0C14] p-8 md:p-10 shadow-lg flex flex-col justify-between space-y-8 relative overflow-hidden bento-card"
           >
             <div className="bento-spotlight" />
             <div className="space-y-4 relative z-10">
               <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 dark:bg-indigo-950 px-3 py-1 rounded-full">
-                Z-Report & Audits
+                Shifts & Register Audits
               </span>
               <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                {config?.features?.[6]?.title || "ورديات الكاشير (Z-Report)"}
+                {isAr ? "ورديات الكاشير وحماية الخزينة" : "Cashier Shifts & Register Safety"}
               </h3>
               <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed max-w-md">
-                {config?.features?.[6]?.description || "تقفيل ورديات دقيق بنظام العد الأعمى لضمان مطابقة الخزينة ومنع أي عجز أو تلاعب من الموظفين."}
+                {isAr ? "تقفيل ورديات دقيق بنظام العد الأعمى لضمان مطابقة المبالغ في الخزينة ومنع أي عجز أو تلاعب." : "Secure cashier shifts with blind cash counts to match drawer totals and prevent missing cash."}
               </p>
             </div>
 
@@ -890,7 +944,7 @@ export default function LandingPage() {
             <div className="p-5 bg-slate-50 dark:bg-white/[0.02] rounded-2xl border border-slate-100 dark:border-slate-800 space-y-4 text-xs z-10">
               <div className="flex flex-col gap-1.5">
                 <div className="flex justify-between font-bold text-slate-700 dark:text-slate-350">
-                  <span>{isAr ? "رصيد الخزينة بالسيستم:" : "System ledger balance:"}</span>
+                  <span>{isAr ? "رصيد الخزينة بالسيستم:" : "Expected cash in register:"}</span>
                   <span className="font-mono dark:text-white">{drawerDeclared.toFixed(2)} {isAr ? "ج.م" : "EGP"}</span>
                 </div>
                 <div className="flex justify-between items-center font-bold text-slate-700 dark:text-slate-350">
@@ -930,7 +984,7 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-        </div>
+        </motion.div>
       </section>
 
       {/* ────────────────────────────────────────────────────────
@@ -1208,7 +1262,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          7. STRATEGIC COMPARISON MATRIX (GFP Table)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-slate-50 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-12">
+      <section className="py-24 bg-slate-50 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-12 blur-reveal">
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "مقارنة الجودة" : "Market Comparison"}
@@ -1292,7 +1346,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          8. DYNAMIC PRICING SECTION (Populated from config/packages)
          ──────────────────────────────────────────────────────── */}
-      <section id="pricing" className="py-24 bg-white border-y border-slate-100 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16">
+      <section id="pricing" className="py-24 bg-white border-y border-slate-100 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16 blur-reveal">
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "الأسعار والاشتراكات" : "Pricing Plans"}
@@ -1403,7 +1457,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          9. TESTIMONIALS SLIDER & FAQS (Accordion)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 max-w-[1400px] mx-auto px-6 sm:px-12 space-y-24">
+      <section className="py-24 max-w-[1400px] mx-auto px-6 sm:px-12 space-y-24 blur-reveal">
         
         {/* Testimonials Swiper integration */}
         <div className="space-y-12">
@@ -1432,6 +1486,7 @@ export default function LandingPage() {
                   className="rounded-[1.8rem] border border-slate-150 dark:border-slate-800 overflow-hidden transition-colors duration-300 shadow-sm bg-white dark:bg-[#0D0C14]"
                 >
                   <button
+                    id={`faq-question-${i}`}
                     onClick={() => setOpenFAQ(isOpen ? null : i)}
                     aria-expanded={isOpen}
                     aria-controls={`faq-answer-${i}`}
@@ -1474,7 +1529,7 @@ export default function LandingPage() {
          10. FINAL SLANTED CTA (Indigo slice block)
          ──────────────────────────────────────────────────────── */}
       <div className="px-4 sm:px-6 lg:px-8 pb-4 relative overflow-visible">
-        <section className="relative w-full max-w-[1400px] mx-auto rounded-[2.5rem] bg-gradient-to-b from-[#1F41AD] to-indigo-900 text-white overflow-hidden shadow-2xl flex flex-col items-center py-20 text-center px-6 sm:px-12 border border-white/10 -skew-y-1">
+        <section className="relative w-full max-w-[1400px] mx-auto rounded-[2.5rem] bg-gradient-to-b from-[#1F41AD] to-indigo-900 text-white overflow-hidden shadow-2xl flex flex-col items-center py-20 text-center px-6 sm:px-12 border border-white/10 -skew-y-1 blur-reveal">
           {/* Unskew back container content */}
           <div className="skew-y-1 w-full max-w-3xl mx-auto px-6 space-y-8 flex flex-col items-center">
             <h2 className="text-3xl sm:text-5xl font-black leading-tight text-white">

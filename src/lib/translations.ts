@@ -23,12 +23,12 @@ export const translations = {
     // Tapes
     tapeItems: [
       "فواتير واتساب فورية",
-      "يعمل بدون إنترنت 📶",
-      "ربط المتاجر الإلكترونية 🔗",
-      "تقارير محاسبية متقدمة 📊",
-      "تكويد ذكي للملابس 👕",
-      "Z-Report رقابة مالية 🛡️",
-      "نقاط بيع متعددة 💳"
+      "يعمل بدون اتصال بالإنترنت",
+      "ربط المتاجر الإلكترونية",
+      "تقارير محاسبية مبسطة",
+      "تكويد ذكي للملابس",
+      "رقابة مالية للخزينة",
+      "نقاط بيع متعددة"
     ],
 
     // Showcase Bento
@@ -37,15 +37,15 @@ export const translations = {
     showcaseFeatures: {
       pos: {
         title: "نقاط البيع والتجزئة",
-        desc: "لبيع الملابس، الأحذية، والإلكترونيات. يدعم التكويد الرياضي للمقاسات والألوان (Matrices)، والبيع السريع بالباركود."
+        desc: "لبيع الملابس، الأحذية، والإلكترونيات. بيسهّل بيع المقاسات والألوان المختلفة بضغطة واحدة، والبيع السريع بالباركود."
       },
       matrix: {
         title: "الورش والمصانع الصغيرة",
-        desc: "يدعم قائمة المواد (BOM)، واحتساب تكلفة المنتج النهائي بناءً على المواد الخام المستهلكة من المخزن تلقائياً."
+        desc: "بيحسبلك تكلفة المنتج تلقائياً من المواد الخام اللي استخدمتها من المخزن تلقائياً."
       },
       shift: {
         title: "الشركات والموزعون",
-        desc: "لمتابعة كشوف حسابات الديون والآجل (Credit Ledgers)، جدولة أقساط الموردين، ومحرك حساب عمولات المناديب والبائعين."
+        desc: "بيتابع حسابات العملاء والديون أول بأول، وجدولة أقساط الموردين، وعمولات البائعين."
       },
       bom: {
         title: "إدارة المخازن",
@@ -99,7 +99,7 @@ export const translations = {
       { feature: "الأمان وحفظ البيانات", manzoma: "نسخ احتياطي فوري وسحابي مشفر يضمن عدم ضياع أي معلومة.", manzomaStatus: "✅", other: "الدفتر معرض للاحتراق أو الضياع أو التلف وتسهل سرقته وتغيير أوراقه.", otherStatus: "❌" }
     ],
     compareRowsDesktop: [
-      { feature: "العمل دون إنترنت (Offline-First)", manzoma: "يعمل بكفاءة 100% أوفلاين ويخزن البيانات محلياً ويزامنها فور عودة الاتصال.", manzomaStatus: "✅", other: "يتوقف تماماً عن العمل وتتعطل حركة البيع بالمحل بمجرد انقطاع الشبكة.", otherStatus: "❌" },
+      { feature: "العمل دون إنترنت (Offline-First)", manzoma: "يعمل بكفاءة أوفلاين ويخزن البيانات محلياً ويزامنها فور عودة الاتصال.", manzomaStatus: "✅", other: "يتوقف تماماً عن العمل وتتعطل حركة البيع بالمحل بمجرد انقطاع الشبكة.", otherStatus: "❌" },
       { feature: "فواتير الواتساب الفورية", manzoma: "إرسال تلقائي وفوري للفواتير بروابط تفاعلية على واتساب العميل.", manzomaStatus: "✅", other: "تقتصر على الطباعة الورقية المكلفة فقط دون أي ترابط رقمي.", otherStatus: "❌" }
     ],
     compareRowsCloud: [
@@ -145,11 +145,11 @@ export const translations = {
         desc: "للسلاسل التجارية الكبرى والورش والمصانع التي تحتاج تصنيع متكامل.",
         features: [
           "نقاط بيع ومخازن غير محدودة",
-          "قائمة المواد والتصنيع (BOM)",
-          "API مفتوح للربط الخارجي",
+          "حساب تكلفة الإنتاج والتصنيع تلقائياً",
+          "إمكانية الربط مع الأنظمة الخارجية",
           "مدير حساب مخصص لمتابعة الفروع",
           "نسخ احتياطي سحابي متقدم",
-          "مزامنة سحابية مضمونة 99.9%"
+          "مزامنة سحابية مضمونة"
         ]
       }
     },
@@ -157,10 +157,10 @@ export const translations = {
     // FAQs
     faqTitle: "الأسئلة الشائعة حول منظومة",
     faqList: [
-      { q: "هل يعمل نظام منظومة كاشير بدون إنترنت؟", a: "نعم، نظام منظومة مصمم ليعمل بدون إنترنت (Offline-First) بشكل كامل. يتم تخزين جميع الفواتير والمبيعات في قاعدة بيانات محلية آمنة ويتم مزامنتها تلقائياً مع السحابة فور عودة الاتصال." },
-      { q: "هل يدعم النظام ربط طابعات الفواتير والباركود؟", a: "نعم، يدعم منظومة جميع أنواع طابعات الفواتير الحرارية (80mm و 58mm)، وأجهزة قراءة الباركود (Scanners)، وموازين البقالة الإلكترونية بمختلف موديلاتها." },
+      { q: "هل يعمل نظام كاشير منظومة بدون إنترنت؟", a: "نعم، نظام منظومة مصمم ليعمل بدون اتصال بالإنترنت بشكل كامل. يتم تخزين جميع الفواتير والمبيعات في قاعدة بيانات محلية آمنة ويتم مزامنتها تلقائياً مع السحابة فور عودة الاتصال." },
+      { q: "هل يدعم النظام ربط طابعات الفواتير والباركود؟", a: "نعم، يدعم منظومة جميع أنواع طابعات الفواتير الحرارية، وأجهزة قراءة الباركود، وموازين البقالة الإلكترونية بمختلف موديلاتها." },
       { q: "كيف تعمل فواتير الواتساب التفاعلية؟", a: "عند إتمام عملية البيع على الكاشير، يقوم النظام بإرسال رسالة فورية ومؤتمتة على واتساب العميل تحتوي على رابط الفاتورة التفاعلية وتفاصيل مشترياته، مما يغنيك عن طباعة الورق الحراري." },
-      { q: "هل يمكنني تتبع المبيعات وإغلاق الورديات عن بعد؟", a: "نعم، من خلال لوحة التحكم السحابية (Cloud Dashboard) يمكنك الاطلاع لحظة بلحظة على تقارير مبيعات الفروع، حركات الخزينة، وإغلاقات الورديات Z-Report من أي هاتف أو جهاز كمبيوتر." }
+      { q: "هل يمكنني تتبع المبيعات وإغلاق الورديات عن بعد؟", a: "نعم، من خلال لوحة التحكم السحابية يمكنك الاطلاع لحظة بلحظة على تقارير مبيعات الفروع، حركات الخزينة، وإغلاقات الخزينة اليومية من أي هاتف أو جهاز كمبيوتر." }
     ],
 
     // Final CTA
@@ -249,8 +249,8 @@ export const translations = {
     integrationSubtitle: "اربط كاشير منظومة بأهم المنصات، المتاجر الإلكترونية، والموازين الحرارية وأنظمة الباركود بكل سهولة.",
 
     // Docs Page
-    docsTitle: "بوابة المطورين والـ API",
-    docsSubtitle: "استكشف مراجع الـ API والـ SDKs الخاصة بمنظومة لربط نقاط البيع وقاعدة البيانات الخاصة بك بكل أمان.",
+    docsTitle: "دليل ربط وتكامل الأنظمة للمطورين",
+    docsSubtitle: "استكشف أدلة المطورين الخاصة بمنظومة لربط نقاط البيع وقاعدة البيانات الخاصة بك بكل أمان.",
 
     // Dynamic Pages SEO Custom
     dynamicSeo: {
@@ -316,7 +316,7 @@ export const translations = {
 منظومة هي شركة رائدة في حلول التكنولوجيا المحاسبية والتجارية تهدف إلى تبسيط وتأمين نقاط البيع وإدارة المخازن للشركات الصغيرة والمحلات والورش. نسعى لتمكين أصحاب الأعمال من الرقابة المالية ومنع السرقة بأسهل الواجهات وأعلى درجات الأمان المالي.
 
 ## رؤيتنا ورسالتنا
-بناء نظام نقاط بيع (POS) هجين، قوي، وسهل الاستخدام يدعم المزامنة التلقائية والتشغيل المحلي بنسبة 100% بأقل التكاليف التشغيلية.
+بناء نظام نقاط بيع (POS) هجين، قوي، وسهل الاستخدام يدعم المزامنة التلقائية والتشغيل المحلي بالكامل بأقل التكاليف التشغيلية.
 
 ## لماذا تختار منظومة؟
 - **تشغيل محلي (Offline-First):** لا تقلق بشأن انقطاع الإنترنت أو الكهرباء.
@@ -394,25 +394,25 @@ export const translations = {
     languageName: "English",
 
     // Hero Section
-    heroBadge: "Hybrid offline-first ERP & POS ecosystem that works 100% without internet 🛡️",
+    heroBadge: "Hybrid offline-first POS ecosystem that works without internet",
     heroHeadlinePart1: "Manage Your Sales, Inventory,",
     heroHeadlinePart2: "and Production Instantly In One Place",
-    heroSubtitle: "A hybrid, offline-first ERP and POS ecosystem that keeps your business running 100% of the time. Say goodbye to register leaks and paper clutter with real-time cloud sync and automated WhatsApp invoicing.",
+    heroSubtitle: "A hybrid, offline-first POS ecosystem that keeps your business running. Say goodbye to register leaks and paper clutter with real-time cloud sync and automated WhatsApp invoicing.",
     heroCTAStart: "Start Free Trial",
     heroCTADemo: "Contact Sales",
-    heroTrust1: "🎁 14 Days Free Trial",
-    heroTrust2: "⏱️ Setup in 5 Minutes",
-    heroTrust3: "📶 No Internet Required",
+    heroTrust1: "14 Days Free Trial",
+    heroTrust2: "Setup in 5 Minutes",
+    heroTrust3: "No Internet Required",
 
     // Tapes
     tapeItems: [
-      "Instant WhatsApp Invoices ⚡",
-      "Works Offline 📶",
-      "E-Commerce Sync 🔗",
-      "Advanced Accounting Reports 📊",
-      "Smart Matrix Clothing Codes 👕",
-      "Z-Report Security Audit 🛡️",
-      "Multi-POS Points 💳"
+      "Instant WhatsApp Invoices",
+      "Works Offline",
+      "E-Commerce Sync",
+      "Advanced Accounting Reports",
+      "Smart Sizes & Colors Coding",
+      "Cash Drawer Security Audit",
+      "Multi-POS Points"
     ],
 
     // Showcase Bento
@@ -421,15 +421,15 @@ export const translations = {
     showcaseFeatures: {
       pos: {
         title: "Retail & POS",
-        desc: "For apparel, shoes, and electronics stores. Supports sizes and colors matrix coding, and fast barcode sales."
+        desc: "For apparel, shoes, and electronics stores. Supports size and color variations easily, and fast barcode sales."
       },
       matrix: {
         title: "Workshops & Manufacturing",
-        desc: "Supports Bill of Materials (BOM), calculating final product cost based on raw materials consumed automatically."
+        desc: "Calculates final product cost based on raw materials consumed from stock automatically."
       },
       shift: {
         title: "Wholesale & Distributors",
-        desc: "Track client debit ledgers, schedule vendor installments, and calculate seller commissions."
+        desc: "Track customer debt ledgers, schedule vendor installments, and calculate seller commissions."
       },
       bom: {
         title: "Warehouse Inventory",
@@ -483,7 +483,7 @@ export const translations = {
       { feature: "Security and Data Retention", manzoma: "Immediate cloud-encrypted backup ensures zero data loss.", manzomaStatus: "✅", other: "Paper logs are easy to steal, lose, or alter manually.", otherStatus: "❌" }
     ],
     compareRowsDesktop: [
-      { feature: "Works Offline-First", manzoma: "Works 100% offline, saves data locally, and syncs upon connection.", manzomaStatus: "✅", other: "Halts sales operations entirely when internet connection goes down.", otherStatus: "❌" },
+      { feature: "Works Offline-First", manzoma: "Works offline, saves data locally, and syncs upon connection.", manzomaStatus: "✅", other: "Halts sales operations entirely when internet connection goes down.", otherStatus: "❌" },
       { feature: "Instant WhatsApp Invoices", manzoma: "Automated interactive invoice links sent straight to client's WhatsApp.", manzomaStatus: "✅", other: "Restricted to costly thermal paper printing with zero digital link.", otherStatus: "❌" }
     ],
     compareRowsCloud: [
@@ -506,7 +506,7 @@ export const translations = {
         desc: "Ideal for small shops beginning their digital transition.",
         features: [
           "Single cashier point of sale",
-          "Works 100% offline-first",
+          "Works offline-first",
           "Basic inventory management",
           "Simple accounting reports",
           "Online standard tech support"
@@ -519,7 +519,7 @@ export const translations = {
           "Up to 3 cashier points of sale",
           "Unlimited WhatsApp invoices",
           "E-commerce website sync",
-          "Smart sizes & colors matrices",
+          "Smart sizes & colors options",
           "Financial reports & shift audits",
           "Dedicated 24/7 tech support"
         ]
@@ -529,11 +529,11 @@ export const translations = {
         desc: "For large retail chains, workshops, and factories requiring production.",
         features: [
           "Unlimited POS & warehouses",
-          "Bill of Materials (BOM) & production",
-          "Open API for custom integrations",
+          "Product costing & production costing",
+          "Open API and custom integrations",
           "Dedicated multi-branch manager",
           "Advanced cloud auto-backups",
-          "99.9% Cloud sync SLA guarantee"
+          "Cloud sync SLA guarantee"
         ]
       }
     },
@@ -542,9 +542,9 @@ export const translations = {
     faqTitle: "Frequently Asked Questions",
     faqList: [
       { q: "Does Manzoma cashier work without internet?", a: "Yes, Manzoma is designed offline-first. All invoices and transactions are saved locally on a secure database and synced to the cloud once network returns." },
-      { q: "Does the system support barcode scanners and printers?", a: "Yes, Manzoma is fully compatible with thermal invoice printers (80mm/58mm), USB/wireless barcode scanners, and grocery barcode scales." },
+      { q: "Does the system support barcode scanners and printers?", a: "Yes, Manzoma is fully compatible with thermal invoice printers, USB/wireless barcode scanners, and grocery barcode scales." },
       { q: "How do WhatsApp invoices work?", a: "Upon checking out a sale, the system sends an automated WhatsApp message to the buyer with their interactive e-receipt link, saving paper costs." },
-      { q: "Can I monitor registers and shifts remotely?", a: "Yes! From the cloud dashboard, you can view live sales, cash drawer balances, and Z-Reports from any mobile or desktop device." }
+      { q: "Can I monitor registers and shifts remotely?", a: "Yes! From the cloud dashboard, you can view live sales, cash drawer balances, and shift registers from any mobile or desktop device." }
     ],
 
     // Final CTA
@@ -614,8 +614,8 @@ export const translations = {
     floatingSupport: "Get Support",
 
     // SEO Meta Tags
-    seoTitle: "Manzoma ERP | Hybrid Offline-First POS & Inventory System",
-    seoDescription: "The best POS, stock management, and manufacturing software for retail in Egypt. Works 100% offline with automated WhatsApp receipts.",
+    seoTitle: "Manzoma | Hybrid Offline-First POS & Inventory System",
+    seoDescription: "POS, stock management, and manufacturing software for retail in Egypt. Works offline with automated WhatsApp receipts.",
     seoKeywords: "egypt cashier pos, retail shop software, offline pos app, clothing store erp, manzoma erp, whatsapp invoicing cashier",
 
     // Signup Page SEO
@@ -703,7 +703,7 @@ Manzoma is a leading retail software company dedicated to simplifying and securi
 Build robust, offline-first, and easy-to-use cashier systems to secure registers and prevent store leaks at low operating costs.
 
 ## Why choose us?
-- **Offline-First:** Works 100% offline without stopping.
+- **Offline-First:** Works offline without stopping.
 - **Blind Shift Counts:** Perfect cash drawer audits.
 - **Dedicated 24/7 support:** Support agents ready to help.`
       },

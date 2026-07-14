@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAdminStore } from "../../store/adminStore";
 
 export default function Footer() {
-  const { config } = useAdminStore();
+  const { config, language } = useAdminStore();
 
   // Dynamic pages for footer
   const footerPages = (config.pages || []).filter(
@@ -82,6 +82,16 @@ export default function Footer() {
                     </li>
                   );
                 })}
+                {idx === 2 && (
+                  <li>
+                    <Link
+                      to="/docs"
+                      className="text-sm font-medium text-brand-muted hover:text-brand-primary transition-colors"
+                    >
+                      {language === "ar" ? "للمطورين (API)" : "Developers (API)"}
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           ))}

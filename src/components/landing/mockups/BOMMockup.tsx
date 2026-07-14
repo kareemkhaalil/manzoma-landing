@@ -56,7 +56,7 @@ export default function BOMMockup() {
           <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center text-white shadow-md">
             <Factory className="w-4 h-4" />
           </div>
-          <span className="text-xs font-black" style={{ color: "var(--text-1)" }}>إدارة التصنيع وقائمة المواد (BOM & Ledger)</span>
+          <span className="text-xs font-black" style={{ color: "var(--text-1)" }}>حساب تكلفة الإنتاج وتتبع المواد الخام</span>
         </div>
         <span className="text-[9px] font-black px-2 py-0.5 rounded-full"
              style={{ backgroundColor: "var(--bg-elevated)", color: "var(--brand)" }}>

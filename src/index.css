@@ -62,10 +62,12 @@ html {
 }
 
 .bg-grid-pattern {
-  background-image: var(--brand-pattern-url, url("/cdn/patternBlue.png"));
-  background-size: 720px auto;
-  background-position: center top;
-  background-repeat: repeat;
+  background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0);
+  background-size: 24px 24px;
+  color: rgba(31, 65, 173, 0.05);
+}
+.dark .bg-grid-pattern {
+  color: rgba(99, 102, 241, 0.07);
 }
 
 body {
@@ -379,6 +381,16 @@ textarea {
   font-weight: 900;
   display: inline-block;
   padding: 0.25rem 0.5rem;
+}
+
+.primary-tape-bg .marquee-item,
+.primary-tape-bg .tape-separator-icon {
+  transform: rotate(3.5deg);
+}
+
+.secondary-tape-bg .marquee-item,
+.secondary-tape-bg .tape-separator-icon {
+  transform: rotate(-3.5deg);
 }
 
 /* Base Accessibility styles for prefers-reduced-motion configuration */
