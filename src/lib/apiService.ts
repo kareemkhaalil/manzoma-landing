@@ -6,9 +6,15 @@
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://api.manzoma.online';
 
-/** Get the stored SuperAdmin JWT token */
-const getToken = (): string | null => {
-  return localStorage.getItem('manzoma_sa_token');
+/** Get the stored JWT token dynamically depending on target API endpoint */
+const getToken = (endpoint?: string): string | null => {
+  if (endpoint?.startsWith('/api/superadmin')) {
+    return localStorage.getItem('manzoma_sa_token');
+  }
+  if (endpoint?.startsWith('/api/portal')) {
+    return localStorage.getItem('manzoma_client_token');
+  }
+  return localStorage.getItem('manzoma_client_token') || localStorage.getItem('manzoma_sa_token');
 };
 
 /** Save the SuperAdmin JWT token */
@@ -23,7 +29,7 @@ export const clearToken = () => {
 
 /** Core fetch wrapper with auth */
 async function apiFetch<T = any>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const token = getToken();
+  const token = getToken(endpoint);
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(options.headers as Record<string, string> || {}),
@@ -215,7 +221,7 @@ export async function updateSubscriptionAdvanced(companyId: string, data: {
  * Triggers a native browser download for the JSON backup of a client.
  */
 export async function downloadCompanyBackup(companyId: string, companyName: string) {
-  const token = getToken();
+  const token = getToken(`/api/superadmin/companies/${companyId}/backup`);
   const res = await fetch(`${API_URL}/api/superadmin/companies/${companyId}/backup`, {
     headers: token ? { 'Authorization': `Bearer ${token}` } : {}
   });

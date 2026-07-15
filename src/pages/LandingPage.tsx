@@ -165,7 +165,7 @@ export default function LandingPage() {
     return () => {
       targets.forEach((t) => observer.unobserve(t));
     };
-  }, []);
+  }, [config, packages, language]);
 
   // Bento Feature 2: WhatsApp Receipt Simulator state
   const [clientPhone, setClientPhone] = useState(isAr ? "01099600048" : "201099600048");
@@ -227,7 +227,7 @@ export default function LandingPage() {
   return (
     <div
       ref={pageRef}
-      className="min-h-screen overflow-x-clip bg-slate-50 text-slate-900 dark:bg-[#060814] dark:text-slate-50 selection:bg-indigo-600 selection:text-white relative"
+      className="min-h-screen overflow-x-clip bg-slate-50 text-slate-900 dark:bg-[#0A192F] dark:text-slate-50 selection:bg-indigo-600 selection:text-white relative"
       data-page="landing"
       dir={isAr ? "rtl" : "ltr"}
     >
@@ -243,7 +243,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          1. NAV & HERO CONTAINER (Light, Cheerful, Majestic)
          ──────────────────────────────────────────────────────── */}
-      <div className="relative w-full overflow-visible pt-28 pb-32">
+      <div className="relative w-full overflow-visible pt-28 pb-32 isolate">
         {/* Navbar */}
         <Navbar isDark={isDark} onToggleTheme={toggleTheme} theme="default" />
 
@@ -518,30 +518,44 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          2.5 DIAGONAL MARQUEE RIBBONS (Tilted ribbon feature)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-20 relative overflow-hidden taps-with-rotate select-none">
+      <section className="py-20 relative overflow-hidden taps-with-rotate select-none" aria-label="Features Marquee">
         {/* Row 1: Left scrolling (Primary Tape) */}
-        <div className="marquee-row primary-tape-bg z-10 relative">
+        <div className="marquee-row primary-tape-bg z-10 relative py-3.5">
+          <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
           <div className="marquee-row__track-wrapper">
             <div className="marquee-row__track">
-              {((t.tapeItems || []) as string[]).concat((t.tapeItems || []) as string[]).concat((t.tapeItems || []) as string[]).map((item: string, idx: number) => (
-                <React.Fragment key={idx}>
-                  <span className="marquee-item text-lg md:text-xl">{item}</span>
-                  <span className="tape-separator-icon text-white/50">✦</span>
-                </React.Fragment>
+              {((config?.marqueeItems && config.marqueeItems.length > 0 ? config.marqueeItems : t.tapeItems) || []).map((item: string, idx: number) => (
+                <span key={`r1-${idx}`} className="marquee-item px-5 py-2.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs sm:text-sm md:text-base font-black tracking-wide select-none shadow-sm hover:bg-white/20 transition-all text-white">
+                  {item}
+                </span>
+              ))}
+            </div>
+            <div className="marquee-row__track" aria-hidden="true">
+              {((config?.marqueeItems && config.marqueeItems.length > 0 ? config.marqueeItems : t.tapeItems) || []).map((item: string, idx: number) => (
+                <span key={`r1-dup-${idx}`} className="marquee-item px-5 py-2.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs sm:text-sm md:text-base font-black tracking-wide select-none shadow-sm hover:bg-white/20 transition-all text-white">
+                  {item}
+                </span>
               ))}
             </div>
           </div>
         </div>
 
         {/* Row 2: Right scrolling (Secondary Tape) */}
-        <div className="marquee-row secondary-tape-bg z-10 relative mt-8">
+        <div className="marquee-row secondary-tape-bg z-10 relative mt-8 py-3.5">
+          <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
           <div className="marquee-row__track-wrapper marquee-row__track-wrapper--reverse">
             <div className="marquee-row__track">
-              {((t.tapeItems || []) as string[]).concat((t.tapeItems || []) as string[]).concat((t.tapeItems || []) as string[]).map((item: string, idx: number) => (
-                <React.Fragment key={idx}>
-                  <span className="marquee-item text-lg md:text-xl">{item}</span>
-                  <span className="tape-separator-icon text-white/50">✦</span>
-                </React.Fragment>
+              {[...((config?.marqueeItems && config.marqueeItems.length > 0 ? config.marqueeItems : t.tapeItems) || [])].reverse().map((item: string, idx: number) => (
+                <span key={`r2-${idx}`} className="marquee-item px-5 py-2.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs sm:text-sm md:text-base font-black tracking-wide select-none shadow-sm hover:bg-white/20 transition-all text-white">
+                  {item}
+                </span>
+              ))}
+            </div>
+            <div className="marquee-row__track" aria-hidden="true">
+              {[...((config?.marqueeItems && config.marqueeItems.length > 0 ? config.marqueeItems : t.tapeItems) || [])].reverse().map((item: string, idx: number) => (
+                <span key={`r2-dup-${idx}`} className="marquee-item px-5 py-2.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs sm:text-sm md:text-base font-black tracking-wide select-none shadow-sm hover:bg-white/20 transition-all text-white">
+                  {item}
+                </span>
               ))}
             </div>
           </div>
@@ -994,7 +1008,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          5. INTERACTIVE SAVINGS CALCULATOR (Image 1 credit calculator style)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-white dark:bg-[#060814]/40 border-y border-slate-100 dark:border-slate-900 blur-reveal">
+      <section className="py-24 bg-white dark:bg-[#0A192F]/40 border-y border-slate-100 dark:border-slate-900 blur-reveal">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
@@ -1215,7 +1229,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          7. STRATEGIC COMPARISON MATRIX (GFP Table)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-slate-50 dark:bg-[#060814]/40 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-12 blur-reveal">
+      <section className="py-24 bg-slate-50 dark:bg-[#0A192F]/40 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-12 blur-reveal">
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "مقارنة الجودة" : "Market Comparison"}
@@ -1571,7 +1585,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          11. WATERMARKED FOOTER (Awwwards-level branding)
          ──────────────────────────────────────────────────────── */}
-      <footer className="py-20 px-6 sm:px-12 lg:px-16 max-w-[1400px] mx-auto border-t border-slate-250 dark:border-slate-800 relative overflow-hidden bg-slate-50 dark:bg-[#060814]/80">
+      <footer className="py-20 px-6 sm:px-12 lg:px-16 max-w-[1400px] mx-auto border-t border-slate-250 dark:border-slate-800 relative overflow-hidden bg-slate-50 dark:bg-[#0A192F]/80">
         
         {/* Massive Watermark brand background */}
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 font-black text-[7.5rem] md:text-[14rem] text-slate-200/40 dark:text-slate-900/10 select-none pointer-events-none uppercase tracking-widest font-mono z-0 leading-none">
