@@ -180,8 +180,6 @@ export default function TestimonialsSwiper({ isAr = true }: TestimonialsSwiperPr
   return (
     <div
       className="relative w-full overflow-hidden"
-      onMouseEnter={() => { setAutoPlaying(false); stopAuto(); }}
-      onMouseLeave={() => { setAutoPlaying(true); }}
       dir={isArLang ? "rtl" : "ltr"}
     >
       {/* Depth fade edges */}
@@ -319,10 +317,11 @@ export default function TestimonialsSwiper({ isAr = true }: TestimonialsSwiperPr
       {/* Progress bar */}
       <div className="mt-4 max-w-xs mx-auto h-0.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
         <motion.div
+          key={current}
           className="h-full bg-[#1F41AD] rounded-full origin-left"
-          animate={{ scaleX: autoPlaying ? 1 : 0 }}
           initial={{ scaleX: 0 }}
-          transition={{ duration: 4.5, ease: "linear", repeat: Infinity, repeatType: "loop" }}
+          animate={{ scaleX: autoPlaying ? 1 : 0 }}
+          transition={{ duration: 4.5, ease: "linear" }}
         />
       </div>
     </div>

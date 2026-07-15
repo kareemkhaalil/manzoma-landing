@@ -250,18 +250,18 @@ export default function LandingPage() {
         {/* Floating parallax backdrop shapes */}
         <motion.div
           style={{ y: springBlob1 }}
-          className="absolute top-24 left-[10%] w-[380px] h-[380px] rounded-full bg-gradient-to-tr from-[#1F41AD]/8 to-indigo-500/3 blur-[100px] pointer-events-none -z-10 animate-gradient"
+          className="absolute top-24 left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#00E5FF]/20 via-[#1F41AD]/15 to-purple-500/8 dark:from-[#00E5FF]/28 dark:via-[#1F41AD]/25 dark:to-indigo-950/20 blur-[130px] pointer-events-none -z-10 animate-gradient"
         />
         <motion.div
           style={{ y: springBlob2 }}
-          className="absolute top-[600px] right-[5%] w-[420px] h-[420px] rounded-full bg-gradient-to-br from-[#10B981]/6 to-emerald-400/2 blur-[120px] pointer-events-none -z-10 animate-gradient"
+          className="absolute top-[500px] right-[5%] w-[550px] h-[550px] rounded-full bg-gradient-to-br from-emerald-500/15 via-[#1F41AD]/15 to-cyan-500/10 dark:from-emerald-950/25 dark:via-indigo-950/20 dark:to-[#00E5FF]/20 blur-[150px] pointer-events-none -z-10 animate-gradient"
         />
         <motion.div
           style={{ y: springBlob3 }}
-          className="absolute top-[1200px] left-[5%] w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-[#F43F5E]/6 to-rose-400/2 blur-[100px] pointer-events-none -z-10 animate-gradient"
+          className="absolute top-[1000px] left-[5%] w-[480px] h-[480px] rounded-full bg-gradient-to-tr from-rose-500/12 via-purple-500/12 to-indigo-500/10 dark:from-rose-950/25 dark:via-purple-950/22 dark:to-indigo-950/20 blur-[130px] pointer-events-none -z-10 animate-gradient"
         />
         {/* Mesh Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-slate-50 to-emerald-500/5 dark:from-indigo-950/20 dark:via-[#060814] dark:to-emerald-950/10 pointer-events-none -z-20 opacity-80" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#00E5FF]/6 via-slate-50/98 to-indigo-500/6 dark:from-[#00E5FF]/10 dark:via-[#06050A] dark:to-indigo-950/25 pointer-events-none -z-20 opacity-95" />
 
         {/* Hero Content */}
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -276,7 +276,7 @@ export default function LandingPage() {
             {/* Tag Badge */}
             <motion.div
               variants={fadeUp}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black bg-indigo-50 border border-indigo-100 text-[#1F41AD] shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-850 text-[#1F41AD] dark:text-indigo-400 glow-border shadow-[0_0_15px_rgba(0,229,255,0.12)]"
             >
               <ShieldCheck className="w-4 h-4 text-indigo-600" />
               <span>{config?.hero?.badgeText || t.heroBadge}</span>
@@ -285,11 +285,11 @@ export default function LandingPage() {
             {/* Headline */}
             <motion.h1
               variants={fadeUp}
-              className="text-4xl sm:text-5xl lg:text-[4.2rem] font-black leading-[1.1] text-slate-900 tracking-tight"
+              className="text-4xl sm:text-5xl lg:text-[4.2rem] font-black leading-[1.1] text-slate-900 dark:text-white tracking-tight"
             >
               {config?.hero?.titleLine1 || t.heroHeadlinePart1}
               <br />
-              <span className="bg-gradient-to-r from-[#1F41AD] to-indigo-400 bg-clip-text text-transparent">
+              <span className="text-shimmer">
                 {config?.hero?.titleLine2 || t.heroHeadlinePart2}
               </span>
             </motion.h1>
@@ -348,7 +348,7 @@ export default function LandingPage() {
           <div className="lg:col-span-5 relative min-h-[460px] w-full flex items-center justify-center perspective-2000">
             
             {/* Backdrop light glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-500/15 via-transparent to-transparent pointer-events-none rounded-full blur-3xl" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/15 via-transparent to-transparent pointer-events-none rounded-full blur-3xl" />
             
             {/* Noise texture overlay */}
             <div className="noise-overlay" />
@@ -359,31 +359,31 @@ export default function LandingPage() {
 
             {/* Mockup Card 1: Shift Audit / Cash register (Far / Background) */}
             <motion.div
-              initial={{ opacity: 0, x: isAr ? 60 : -60, y: -40, rotateZ: -6 }}
-              animate={{ opacity: 0.9, x: isAr ? 40 : -40, y: -30, rotateZ: -4 }}
+              initial={{ opacity: 0, x: isAr ? 40 : -40, y: -20, rotateZ: -6 }}
+              animate={{ opacity: 0.95, x: 0, y: 0, rotateZ: -4 }}
               transition={{ duration: 1.2, ease }}
-              className="absolute top-4 left-4 z-10 w-full max-w-[280px] cursor-pointer"
+              className="absolute top-0 left-0 lg:-left-12 z-10 w-full max-w-[280px] cursor-pointer"
             >
               <div 
-                className="w-full rounded-3xl p-6 glass-card border border-slate-100/50 shadow-[0_20px_50px_rgba(0,0,0,0.12)] text-slate-800 space-y-4 animate-float-far hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.22)] hover:-translate-y-2 transition-all duration-300"
+                className="w-full rounded-3xl p-6 glass-card border border-indigo-100/40 dark:border-indigo-900/30 shadow-[0_20px_50px_rgba(0,0,0,0.08),0_0_20px_rgba(99,102,241,0.05)] text-slate-800 dark:text-slate-200 space-y-4 animate-float-far hover:shadow-[0_30px_60px_-15px_rgba(99,102,241,0.18)] hover:-translate-y-2 transition-all duration-300"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <div className="flex justify-between items-center">
-                  <span className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                  <span className="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                     <Lock className="w-4 h-4" />
                   </span>
-                  <span className="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full font-black flex items-center gap-1">
+                  <span className="text-[10px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full font-black flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     {isAr ? "وردية مؤمنة" : "Register Safe"}
                   </span>
                 </div>
                 <div className="space-y-1">
                   <div className="text-[10px] text-slate-400 font-bold uppercase">{isAr ? "الوردية الحالية" : "Current Shift"}</div>
-                  <div className="text-sm font-black text-slate-800">{isAr ? "وردية 1 | كاشير رئيسي" : "Shift 1 | Main Register"}</div>
+                  <div className="text-sm font-black text-slate-800 dark:text-white">{isAr ? "وردية 1 | كاشير رئيسي" : "Shift 1 | Main Register"}</div>
                 </div>
-                <div className="flex justify-between items-center pt-2 border-t border-slate-50 text-xs">
+                <div className="flex justify-between items-center pt-2 border-t border-slate-50 dark:border-slate-800 text-xs">
                   <span className="text-slate-400 font-medium">{isAr ? "مستخدم:" : "User:"}</span>
-                  <span className="font-bold text-slate-700">{isAr ? "كريم خليل" : "Kareem K."}</span>
+                  <span className="font-bold text-slate-700 dark:text-slate-330">{isAr ? "كريم خليل" : "Kareem K."}</span>
                 </div>
               </div>
             </motion.div>
@@ -396,11 +396,14 @@ export default function LandingPage() {
               className="absolute z-25 w-full max-w-[330px] cursor-pointer"
             >
               <div 
-                className="w-full rounded-3xl p-6 glass-dark border border-slate-850/80 shadow-[0_30px_60px_-10px_rgba(0,0,0,0.3)] text-white space-y-6 animate-float-mid hover:shadow-[0_40px_80px_-10px_rgba(99,102,241,0.25)] hover:-translate-y-3 transition-all duration-300"
+                className="w-full rounded-3xl p-6 glass-dark border border-slate-850/80 sci-fi-glow text-white space-y-6 animate-float-mid hover:shadow-[0_40px_80px_-10px_rgba(0,229,255,0.35)] hover:-translate-y-3 transition-all duration-300"
                 style={{ transformStyle: "preserve-3d" }}
               >
+                {/* HUD pulsing points */}
+                <div className="absolute top-3 left-3 w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse z-20" />
+                <div className="absolute bottom-3 right-3 w-1.5 h-1.5 rounded-full bg-[#8B5CF6] animate-pulse z-20" />
                 {/* Scan line effect overlay */}
-                <div className="absolute inset-0 w-full h-[2px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-40 top-0 animate-scan pointer-events-none" />
+                <div className="absolute inset-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-40 top-0 animate-scan pointer-events-none" />
 
                 <div className="flex justify-between items-center">
                   <div>
@@ -438,30 +441,30 @@ export default function LandingPage() {
 
             {/* Mockup Card 3: WhatsApp Sent Logs (Near / Closest to Camera) */}
             <motion.div
-              initial={{ opacity: 0, x: isAr ? -60 : 60, y: 60, scale: 0.85, rotateZ: 5 }}
-              animate={{ opacity: 1, x: isAr ? -20 : 20, y: 30, scale: 1, rotateZ: 4 }}
+              initial={{ opacity: 0, x: isAr ? -40 : 40, y: 20, scale: 0.85, rotateZ: 5 }}
+              animate={{ opacity: 1, x: 0, y: 0, scale: 1, rotateZ: 4 }}
               transition={{ duration: 1.4, delay: 0.3, ease }}
-              className="absolute z-30 w-full max-w-[270px] cursor-pointer"
+              className="absolute bottom-0 right-0 lg:-right-12 z-30 w-full max-w-[270px] cursor-pointer"
             >
               <div 
-                className="w-full rounded-3xl p-5 bg-white border border-slate-100 shadow-[0_25px_50px_rgba(0,0,0,0.15)] text-slate-800 space-y-3.5 animate-float-near hover:shadow-[0_35px_70px_-15px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-300"
+                className="w-full rounded-3xl p-5 bg-white dark:bg-[#0D0C14] border border-slate-150 dark:border-slate-850 shadow-[0_25px_50px_rgba(0,0,0,0.08),0_0_20px_rgba(0,229,255,0.03)] text-slate-850 dark:text-slate-200 space-y-3.5 animate-float-near hover:shadow-[0_35px_70px_-15px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-black text-slate-900 flex items-center gap-1.5">
+                  <span className="font-black text-slate-900 dark:text-white flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     {isAr ? "تقارير الواتساب" : "WhatsApp Logs"}
                   </span>
                   <span className="text-[10px] text-slate-400">2 min ago</span>
                 </div>
                 <div className="space-y-2">
-                  <div className="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center text-[11px]">
-                    <span className="font-bold text-slate-700">{isAr ? "قميص كاجوال رجالي" : "Men shirt"}</span>
-                    <span className="text-[#1F41AD] font-black">💬 {isAr ? "تم الإرسال" : "Sent"}</span>
+                  <div className="p-2.5 bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-slate-800 rounded-xl flex justify-between items-center text-[11px]">
+                    <span className="font-bold text-slate-700 dark:text-slate-350">{isAr ? "قميص كاجوال رجالي" : "Men shirt"}</span>
+                    <span className="text-[#1F41AD] dark:text-indigo-400 font-black">💬 {isAr ? "تم الإرسال" : "Sent"}</span>
                   </div>
-                  <div className="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center text-[11px]">
-                    <span className="font-bold text-slate-700">{isAr ? "بنطلون جينز" : "Jeans pants"}</span>
-                    <span className="text-[#1F41AD] font-black">💬 {isAr ? "تم الإرسال" : "Sent"}</span>
+                  <div className="p-2.5 bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-slate-800 rounded-xl flex justify-between items-center text-[11px]">
+                    <span className="font-bold text-slate-700 dark:text-slate-350">{isAr ? "بنطلون جينز" : "Jeans pants"}</span>
+                    <span className="text-[#1F41AD] dark:text-indigo-400 font-black">💬 {isAr ? "تم الإرسال" : "Sent"}</span>
                   </div>
                 </div>
               </div>
@@ -686,9 +689,9 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          4. BENTO BOX FEATURES SECTION (Interactive & Stunning)
          ──────────────────────────────────────────────────────── */}
-      <section id="features" className="py-24 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16 blur-reveal">
-        
-        <div className="text-center max-w-2xl mx-auto space-y-4">
+      <section id="features" className="py-24 dark-tech-section w-full blur-reveal">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16">
+          <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "مزايا خارقة" : "Powerful Capabilities"}
           </span>
@@ -985,6 +988,7 @@ export default function LandingPage() {
           </motion.div>
 
         </motion.div>
+        </div>
       </section>
 
       {/* ────────────────────────────────────────────────────────
@@ -1120,8 +1124,9 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          6. HYBRID SYNC NETWORK FLOW (PostgreSQL Cloud to local nodes)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16 blur-reveal">
-        <div className="text-center max-w-2xl mx-auto space-y-4">
+      <section className="py-24 dark-tech-section w-full blur-reveal">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16">
+          <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "أمن وحفظ قواعد البيانات" : "Database Security & Sync"}
           </span>
@@ -1203,6 +1208,7 @@ export default function LandingPage() {
             </div>
 
           </div>
+        </div>
         </div>
       </section>
 
@@ -1346,8 +1352,9 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          8. DYNAMIC PRICING SECTION (Populated from config/packages)
          ──────────────────────────────────────────────────────── */}
-      <section id="pricing" className="py-24 bg-white border-y border-slate-100 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16 blur-reveal">
-        <div className="text-center max-w-2xl mx-auto space-y-4">
+      <section id="pricing" className="py-24 dark-tech-section w-full blur-reveal">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16">
+          <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "الأسعار والاشتراكات" : "Pricing Plans"}
           </span>
@@ -1451,6 +1458,7 @@ export default function LandingPage() {
               </div>
             );
           })}
+        </div>
         </div>
       </section>
 
