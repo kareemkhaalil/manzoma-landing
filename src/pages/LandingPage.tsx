@@ -41,6 +41,7 @@ import {
 
 import Navbar from "../components/landing/Navbar";
 import TestimonialsSwiper from "../components/landing/TestimonialsSwiper";
+import MarqueeTape from "../components/landing/MarqueeTape";
 import { useAdminStore } from "../store/adminStore";
 import { translations } from "../lib/translations";
 import { useSEO } from "../hooks/useSEO";
@@ -518,69 +519,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          2.5 DIAGONAL MARQUEE RIBBONS (Tilted ribbon feature)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-20 relative overflow-hidden taps-with-rotate select-none" aria-label="Features Marquee">
-        {/* Row 1: Left scrolling (Primary Tape) */}
-        <div className="marquee-row primary-tape-bg z-10 relative py-5">
-          <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
-          <div className="marquee-row__track-wrapper">
-            <div className="marquee-row__track">
-              {[...Array(6)].flatMap(() => ((config?.marqueeItems && config.marqueeItems.length > 0 ? config.marqueeItems : t.tapeItems) || [])).map((item: string, idx: number) => (
-                <div key={`r1-${idx}`} className="flex items-center shrink-0 font-sans">
-                  <span className="marquee-item text-white text-base sm:text-lg md:text-xl font-black select-none tracking-wide">
-                    {item}
-                  </span>
-                  <svg width="20px" height="20px" className="text-white/60 mx-6 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.53 11.23l-5.18 3.59c-.76.53-1.2.22-.98-.67l.95-3.84-1.65-.41c-.75-.18-.84-.7-.21-1.14l5.18-3.59c.76-.53 1.2-.22.98.67l-.95 3.84 1.65.41c.75.19.84.7.21 1.14z"/>
-                  </svg>
-                </div>
-              ))}
-            </div>
-            <div className="marquee-row__track" aria-hidden="true">
-              {[...Array(6)].flatMap(() => ((config?.marqueeItems && config.marqueeItems.length > 0 ? config.marqueeItems : t.tapeItems) || [])).map((item: string, idx: number) => (
-                <div key={`r1-dup-${idx}`} className="flex items-center shrink-0 font-sans">
-                  <span className="marquee-item text-white text-base sm:text-lg md:text-xl font-black select-none tracking-wide">
-                    {item}
-                  </span>
-                  <svg width="20px" height="20px" className="text-white/60 mx-6 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.53 11.23l-5.18 3.59c-.76.53-1.2.22-.98-.67l.95-3.84-1.65-.41c-.75-.18-.84-.7-.21-1.14l5.18-3.59c.76-.53 1.2-.22.98.67l-.95 3.84 1.65.41c.75.19.84.7.21 1.14z"/>
-                  </svg>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Row 2: Right scrolling (Secondary Tape) */}
-        <div className="marquee-row secondary-tape-bg z-10 relative mt-8 py-5">
-          <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
-          <div className="marquee-row__track-wrapper marquee-row__track-wrapper--reverse">
-            <div className="marquee-row__track">
-              {[...Array(6)].flatMap(() => [...((config?.marqueeItems && config.marqueeItems.length > 0 ? config.marqueeItems : t.tapeItems) || [])].reverse()).map((item: string, idx: number) => (
-                <div key={`r2-${idx}`} className="flex items-center shrink-0 font-sans">
-                  <span className="marquee-item text-white text-base sm:text-lg md:text-xl font-black select-none tracking-wide">
-                    {item}
-                  </span>
-                  <svg width="20px" height="20px" className="text-white/60 mx-6 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.53 11.23l-5.18 3.59c-.76.53-1.2.22-.98-.67l.95-3.84-1.65-.41c-.75-.18-.84-.7-.21-1.14l5.18-3.59c.76-.53 1.2-.22.98.67l-.95 3.84 1.65.41c.75.19.84.7.21 1.14z"/>
-                  </svg>
-                </div>
-              ))}
-            </div>
-            <div className="marquee-row__track" aria-hidden="true">
-              {[...Array(6)].flatMap(() => [...((config?.marqueeItems && config.marqueeItems.length > 0 ? config.marqueeItems : t.tapeItems) || [])].reverse()).map((item: string, idx: number) => (
-                <div key={`r2-dup-${idx}`} className="flex items-center shrink-0 font-sans">
-                  <span className="marquee-item text-white text-base sm:text-lg md:text-xl font-black select-none tracking-wide">
-                    {item}
-                  </span>
-                  <svg width="20px" height="20px" className="text-white/60 mx-6 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.53 11.23l-5.18 3.59c-.76.53-1.2.22-.98-.67l.95-3.84-1.65-.41c-.75-.18-.84-.7-.21-1.14l5.18-3.59c.76-.53 1.2-.22.98.67l-.95 3.84 1.65.41c.75.19.84.7.21 1.14z"/>
-                  </svg>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <MarqueeTape />
 
       {/* ────────────────────────────────────────────────────────
          3. SEGMENTS INTERACTIVE WIDGET (Image 2 style layout picker)

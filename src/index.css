@@ -360,11 +360,11 @@ textarea {
 .marquee-row__track-wrapper {
   display: flex;
   width: max-content;
-  animation: marquee-scroll-left 25s linear infinite;
+  animation: marquee-scroll-left 20s linear infinite;
 }
 
 .marquee-row__track-wrapper--reverse {
-  animation: marquee-scroll-right 25s linear infinite;
+  animation: marquee-scroll-right 20s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
