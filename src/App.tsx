@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import LandingPage from "./pages/LandingPage";
 import { useAdminStore } from "./store/adminStore";
 import FloatingWhatsApp from "./components/landing/FloatingWhatsApp";
+import BottomNav from "./components/landing/BottomNav";
 
 const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
 const AdminLogin = React.lazy(() => import("./pages/AdminLogin"));
@@ -69,6 +70,7 @@ function AppContent() {
       </Routes>
       </Suspense>
       {!isAdminRoute && <FloatingWhatsApp />}
+      {!isAdminRoute && <BottomNav />}
     </>
   );
 }

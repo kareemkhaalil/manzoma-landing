@@ -244,7 +244,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          1. NAV & HERO CONTAINER (Light, Cheerful, Majestic)
          ──────────────────────────────────────────────────────── */}
-      <div className="relative w-full overflow-visible pt-28 pb-32 isolate">
+      <div className="relative w-full overflow-visible pt-20 pb-16 md:pt-28 md:pb-32 isolate">
         {/* Navbar */}
         <Navbar isDark={isDark} onToggleTheme={toggleTheme} theme="default" />
 
@@ -524,7 +524,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          3. SEGMENTS INTERACTIVE WIDGET (Image 2 style layout picker)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-12 blur-reveal">
+      <section className="py-12 md:py-24 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-8 md:space-y-12 blur-reveal">
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "تغطية كاملة لنشاطك" : "Targeted Industry Fit"}
@@ -662,7 +662,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          4. BENTO BOX FEATURES SECTION (Interactive & Stunning)
          ──────────────────────────────────────────────────────── */}
-      <section id="features" className="py-24 dark-tech-section w-full blur-reveal">
+      <section id="features" className="py-12 md:py-24 dark-tech-section w-full blur-reveal">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
@@ -967,7 +967,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          5. INTERACTIVE SAVINGS CALCULATOR (Image 1 credit calculator style)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-white dark:bg-[#0A192F]/40 border-y border-slate-100 dark:border-slate-900 blur-reveal">
+      <section className="py-12 md:py-24 bg-white dark:bg-[#0A192F]/40 border-y border-slate-100 dark:border-slate-900 blur-reveal">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
@@ -1097,7 +1097,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          6. HYBRID SYNC NETWORK FLOW (PostgreSQL Cloud to local nodes)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 dark-tech-section w-full blur-reveal">
+      <section className="py-12 md:py-24 dark-tech-section w-full blur-reveal">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
@@ -1188,7 +1188,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          7. STRATEGIC COMPARISON MATRIX (GFP Table)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-slate-50 dark:bg-[#0A192F]/40 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-12 blur-reveal">
+      <section className="py-12 md:py-24 bg-slate-50 dark:bg-[#0A192F]/40 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-8 md:space-y-12 blur-reveal">
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "مقارنة الجودة" : "Market Comparison"}
@@ -1241,7 +1241,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          7. STRATEGIC COMPARISON MATRIX (GFP Table)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-slate-50 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-12 blur-reveal">
+      <section className="py-12 md:py-24 bg-slate-50 max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-8 md:space-y-12 blur-reveal">
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
             {isAr ? "مقارنة الجودة" : "Market Comparison"}
@@ -1325,7 +1325,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          8. DYNAMIC PRICING SECTION (Populated from config/packages)
          ──────────────────────────────────────────────────────── */}
-      <section id="pricing" className="py-24 dark-tech-section w-full blur-reveal">
+      <section id="pricing" className="py-12 md:py-24 dark-tech-section w-full blur-reveal">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
           <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 px-3 py-1 rounded-full">
@@ -1438,7 +1438,7 @@ export default function LandingPage() {
       {/* ────────────────────────────────────────────────────────
          9. TESTIMONIALS SLIDER & FAQS (Accordion)
          ──────────────────────────────────────────────────────── */}
-      <section className="py-24 max-w-[1400px] mx-auto px-6 sm:px-12 space-y-24 blur-reveal">
+      <section className="py-12 md:py-24 max-w-[1400px] mx-auto px-6 sm:px-12 space-y-12 md:space-y-24 blur-reveal">
         
         {/* Testimonials Swiper integration */}
         <div className="space-y-12">
@@ -1510,7 +1510,7 @@ export default function LandingPage() {
          10. FINAL SLANTED CTA (Indigo slice block)
          ──────────────────────────────────────────────────────── */}
       <div className="px-4 sm:px-6 lg:px-8 pb-4 relative overflow-visible">
-        <section className="relative w-full max-w-[1400px] mx-auto rounded-[2.5rem] bg-gradient-to-b from-[#1F41AD] to-indigo-900 text-white overflow-hidden shadow-2xl flex flex-col items-center py-20 text-center px-6 sm:px-12 border border-white/10 -skew-y-1 blur-reveal">
+        <section className="relative w-full max-w-[1400px] mx-auto rounded-[2.5rem] bg-gradient-to-b from-[#1F41AD] to-indigo-900 text-white overflow-hidden shadow-2xl flex flex-col items-center py-10 md:py-20 text-center px-6 sm:px-12 border border-white/10 -skew-y-1 blur-reveal">
           {/* Unskew back container content */}
           <div className="skew-y-1 w-full max-w-3xl mx-auto px-6 space-y-8 flex flex-col items-center">
             <h2 className="text-3xl sm:text-5xl font-black leading-tight text-white">

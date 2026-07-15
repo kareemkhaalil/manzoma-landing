@@ -1,0 +1,24 @@
+{
+  "name": "منظومة ERP",
+  "short_name": "منظومة",
+  "description": "أسرع كاشير وأذكى نظام إدارة مبيعات يعمل بالكامل بدون اتصال بالإنترنت",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A192F",
+  "theme_color": "#0A192F",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
