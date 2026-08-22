@@ -30,16 +30,6 @@ export function useSEO({ title, description, keywords, canonical, image }: SEOPr
       }
     }
 
-    // 3. Update Keywords Meta Tag
-    if (keywords) {
-      let metaKey = document.querySelector("meta[name='keywords']");
-      if (!metaKey) {
-        metaKey = document.createElement("meta");
-        metaKey.setAttribute("name", "keywords");
-        document.head.appendChild(metaKey);
-      }
-      metaKey.setAttribute("content", keywords);
-    }
 
     // 4. Update Canonical Link
     let linkCan = document.querySelector("link[rel='canonical']");
