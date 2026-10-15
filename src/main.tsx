@@ -9,6 +9,7 @@ Sentry.init({
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration(),
+    Sentry.captureConsoleIntegration({ levels: ['error'] }),
   ],
   tracesSampleRate: 1.0,
   replaysSessionSampleRate: 0.1,
