@@ -7,6 +7,7 @@ import LandingEditor from "../components/admin/LandingEditor";
 import PackagesEditor from "../components/admin/PackagesEditor";
 import AcademyEditor from "../components/admin/AcademyEditor";
 import ClientsManager from "../components/admin/ClientsManager";
+import ReleasesManager from "../components/admin/ReleasesManager";
 import SystemLogs from "../components/admin/SystemLogs";
 import StatsPage from "../components/admin/StatsPage";
 import SettingsPage from "../components/admin/SettingsPage";
@@ -17,6 +18,7 @@ import AdminsEditor from "../components/admin/AdminsEditor";
 import GlobalInvoices from "../components/admin/GlobalInvoices";
 import SuperAdminPaymentMethods from "../components/admin/SuperAdminPaymentMethods";
 import PaymentApprovals from "../components/admin/PaymentApprovals";
+import NotificationCenter from "../components/admin/NotificationCenter";
 import { useAdminStore } from "../store/adminStore";
 
 export default function AdminDashboard() {
@@ -40,6 +42,7 @@ export default function AdminDashboard() {
             <Route path="/pages" element={<PagesEditor />} />
             <Route path="/navigation" element={<NavigationEditor />} />
             <Route path="/clients" element={<ClientsManager />} />
+            <Route path="/releases" element={<ReleasesManager />} />
             <Route path="/invoices" element={<GlobalInvoices />} />
             <Route path="/logs" element={<SystemLogs />} />
             <Route path="/stats" element={<StatsPage />} />
@@ -48,6 +51,7 @@ export default function AdminDashboard() {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/payment-methods" element={<SuperAdminPaymentMethods />} />
             <Route path="/payment-approvals" element={<PaymentApprovals />} />
+            <Route path="/notifications" element={<NotificationCenter />} />
             <Route path="*" element={<Navigate to="/admin" replace />} />
           </Routes>
           </div>

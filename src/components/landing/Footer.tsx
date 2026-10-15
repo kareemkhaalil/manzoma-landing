@@ -6,9 +6,14 @@ export default function Footer() {
   const { config, language } = useAdminStore();
 
   // Dynamic pages for footer
-  const footerPages = (config.pages || []).filter(
-    (p) => p.isPublished && p.showInFooter
-  ).sort((a, b) => a.order - b.order);
+  const pagesList = Array.isArray(config?.pages) ? config.pages : [];
+  const footerPages = pagesList.filter(
+    (p) => p && p.isPublished && p.showInFooter
+  ).sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  const validSocialLinks = Array.isArray(config?.socialLinks) 
+    ? config.socialLinks.filter((social) => social && social.url?.trim()) 
+    : [];
 
   return (
     <footer className="bg-white border-t border-brand-border/50 relative z-10">
@@ -31,7 +36,7 @@ export default function Footer() {
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">
-              {config.socialLinks?.filter((social) => social.url?.trim()).map((social, idx) => {
+              {validSocialLinks.map((social, idx) => {
                 let iconPath = "";
                 switch (social.platform.toLowerCase()) {
                   case "facebook": iconPath = "M24 4.56c-.88.39-1.83.65-2.83.77a4.93 4.93 0 002.17-2.72 9.86 9.86 0 01-3.13 1.2 4.92 4.92 0 00-8.38 4.48A13.94 13.94 0 011.67 3.15a4.93 4.93 0 001.52 6.57 4.9 4.9 0 01-2.23-.62v.06a4.93 4.93 0 003.95 4.83 4.93 4.93 0 01-2.22.08 4.93 4.93 0 004.6 3.42A9.87 9.87 0 010 19.54a13.93 13.93 0 007.55 2.21c9.06 0 14.01-7.5 14.01-14.01 0-.21 0-.42-.01-.63A10 10 0 0024 4.56z"; break;

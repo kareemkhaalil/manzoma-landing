@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ArrowLeft, ShieldCheck, Zap, Headset } from "lucide-react";
+import { ChevronLeft, ArrowLeft, ShieldCheck, Zap, Headset, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAdminStore } from "../../store/adminStore";
 import LeadCaptureModal from "./LeadCaptureModal";
@@ -119,7 +119,14 @@ export default function Hero() {
             {config.hero.ctaText}
             <ChevronLeft className="w-4 h-4 opacity-70" />
           </Link>
-          <a href="https://app.manzoma.online" target="_blank" rel="noopener noreferrer" className="btn-outline px-7 py-3.5 text-base flex items-center justify-center gap-2">
+          <Link
+            to="/download"
+            className="px-7 py-3.5 text-base rounded-xl font-bold flex items-center justify-center gap-2.5 bg-brand-navy text-white hover:bg-slate-900 border border-slate-700/50 shadow-md hover:scale-[1.02] active:scale-95 transition-all"
+          >
+            <Download className="w-4.5 h-4.5 text-brand-emerald animate-bounce" />
+            تحميل برنامج الويندوز
+          </Link>
+          <a href="https://app.manzoma.online" target="_blank" rel="noopener noreferrer" className="btn-outline px-6 py-3.5 text-base flex items-center justify-center gap-2">
             تسجيل الدخول
           </a>
         </motion.div>

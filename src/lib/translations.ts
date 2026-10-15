@@ -432,9 +432,41 @@ export const translations = {
     heroSubtitle: "A hybrid, offline-first POS ecosystem that keeps your business running. Say goodbye to register leaks and paper clutter with real-time cloud sync and automated WhatsApp invoicing.",
     heroCTAStart: "Start Free Trial",
     heroCTADemo: "Contact Sales",
+    heroCTAContact: "Talk to Manzoma Team",
     heroTrust1: "14 Days Free Trial",
     heroTrust2: "Setup in 5 Minutes",
     heroTrust3: "No Internet Required",
+
+    // Why Manzoma
+    whyTitle: "Why Manzoma?",
+    whySubtitle: "3 tangible outcomes that help you organize your daily retail business without complexity.",
+    whyOutcomes: [
+      {
+        title: "Sales continue during poor connectivity",
+        desc: "The POS works locally on your machine at lightning speed without interruptions even offline, and auto-syncs when reconnected."
+      },
+      {
+        title: "Sizes, colors & barcodes for specialized stores",
+        desc: "Rapid tagging of apparel and footwear with sizes and colors, plus one-click barcode label printing."
+      },
+      {
+        title: "Clear shifts, discounts & stock flow",
+        desc: "Log every sale, discount, and return by cashier name, with precise shift closure and cash drawer audits."
+      }
+    ],
+
+    // Fit Segments
+    fitTitle: "Is It Right For Your Business?",
+    fitSubtitle: "Designed specifically for retail stores that rely on fast cashiers and tight inventory control.",
+
+    // How it works
+    howItWorksTitle: "How It Works",
+    howItWorksSubtitle: "Simple steps to get up and running seamlessly.",
+
+    // Final CTA
+    finalCtaDemo: "Watch 60-Second Demo",
+    finalCtaContact: "Chat on WhatsApp",
+    finalCtaSignup: "Create Free Trial Account",
 
     // Tapes
     tapeItems: [

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAdminStore } from "../../store/adminStore";
 
@@ -40,12 +40,16 @@ export default function CTA() {
             إعداد النظام يستغرق أقل من 5 دقائق.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/signup" className="bg-white text-brand-navy px-8 py-4 rounded-full text-sm font-[900] hover:bg-brand-bg transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5 inline-flex items-center justify-center gap-2">
-              ابدأ إنشاء حسابك الآن
+            <Link to="/download" className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-8 py-4 rounded-full text-sm font-[900] hover:scale-105 transition-all shadow-xl shadow-emerald-500/25 inline-flex items-center justify-center gap-2">
+              <Download className="w-4 h-4 animate-bounce" />
+              تحميل برنامج الويندوز (مجاناً)
+            </Link>
+            <Link to="/signup" className="bg-white text-brand-navy px-8 py-4 rounded-full text-sm font-[900] hover:bg-brand-bg transition-all shadow-xl hover:-translate-y-0.5 inline-flex items-center justify-center gap-2">
+              ابدأ تجربتك المجانية
               <ChevronLeft className="w-4 h-4 opacity-50" />
             </Link>
             <a href="https://app.manzoma.online" target="_blank" rel="noopener noreferrer" className="border border-white/20 text-white/80 px-8 py-4 rounded-full text-sm font-[800] hover:bg-white/10 transition-all inline-flex items-center justify-center gap-2">
-              تسجيل الدخول للنظام
+              دخول النظام السحابي
             </a>
           </div>
         </motion.div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAdminStore } from "../../store/adminStore";
 import { translations } from "../../lib/translations";
@@ -33,11 +33,13 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
     { to: "/#pricing", label: t.pricing },
     { to: "/academy", label: t.academy },
     { to: "/blog", label: language === "ar" ? "المدونة" : "Blog" },
+    { to: "/download", label: language === "ar" ? "تحميل البرنامج" : "Download" },
   ];
 
   const isBlue = theme === "blue";
-  const visibleLinks = config.headerLinks?.filter((link) => link.url?.trim()).length
-    ? config.headerLinks.map((link) => ({ ...link, to: link.url }))
+  const headerLinksArray = Array.isArray(config?.headerLinks) ? config.headerLinks : [];
+  const visibleLinks = headerLinksArray.filter((link) => link && link.url?.trim()).length
+    ? headerLinksArray.map((link) => ({ ...link, to: link.url }))
     : links;
 
   return (
@@ -56,11 +58,6 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
               alt={config.siteName || "Manzoma"}
               className="h-10 w-auto max-w-36 object-contain object-right"
             />
-            {/* <span className={`text-lg font-black tracking-tight ${
-              isBlue ? "text-white" : "text-slate-900 dark:text-white"
-            }`}>
-              {language === "ar" ? "منظومة" : "Manzoma"}
-            </span> */}
           </Link>
 
           {/* Desktop Links (Centered) */}
@@ -106,6 +103,16 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
                 {language === "ar" ? "EN" : "AR"}
               </span>
             </button>
+
+            {/* Download App Button - Always Visible & Highly Styled */}
+            <Link
+              to="/download"
+              className="inline-flex h-10 sm:h-11 px-3.5 sm:px-5 rounded-xl text-xs sm:text-sm font-black items-center justify-center gap-2 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 text-white shadow-lg shadow-emerald-500/25 border border-emerald-400/40 hover:shadow-emerald-500/40"
+              title={language === "ar" ? "تحميل تطبيق الكاشير المكتبي" : "Download POS Desktop App"}
+            >
+              <Download className="w-4 h-4 text-white animate-bounce shrink-0" />
+              <span>{language === "ar" ? "تحميل البرنامج" : "Download"}</span>
+            </Link>
 
             {/* Start Free Button */}
             <Link
@@ -155,9 +162,17 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
                 </Link>
               ))}
               <Link
+                to="/download"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-center gap-2 w-full text-center h-12 leading-[3rem] rounded-xl text-sm font-black mt-2 bg-slate-900 text-white shadow-md"
+              >
+                <Download className="w-4 h-4 text-emerald-400" />
+                <span>{language === "ar" ? "تحميل برنامج الويندوز" : "Download Windows App"}</span>
+              </Link>
+              <Link
                 to="/signup"
                 onClick={() => setIsOpen(false)}
-                className={`block w-full text-center h-12 leading-[3rem] rounded-xl text-sm font-black mt-3 ${isBlue ? "bg-white text-slate-950" : "text-white bg-indigo-600 hover:bg-indigo-500"
+                className={`block w-full text-center h-12 leading-[3rem] rounded-xl text-sm font-black mt-2 ${isBlue ? "bg-white text-slate-950" : "text-white bg-indigo-600 hover:bg-indigo-500"
                   }`}
               >
                 {t.startFree}

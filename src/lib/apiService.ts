@@ -9,12 +9,12 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://api.manzoma.online';
 /** Get the stored JWT token dynamically depending on target API endpoint */
 const getToken = (endpoint?: string): string | null => {
   if (endpoint?.startsWith('/api/superadmin')) {
-    return localStorage.getItem('manzoma_sa_token');
+    return localStorage.getItem('manzoma_sa_token') || localStorage.getItem('token');
   }
   if (endpoint?.startsWith('/api/portal')) {
     return localStorage.getItem('manzoma_client_token');
   }
-  return localStorage.getItem('manzoma_client_token') || localStorage.getItem('manzoma_sa_token');
+  return localStorage.getItem('manzoma_client_token') || localStorage.getItem('manzoma_sa_token') || localStorage.getItem('token');
 };
 
 /** Save the SuperAdmin JWT token */
@@ -78,6 +78,8 @@ export interface CompanyFromAPI {
   status: string;
   planName: string;
   isActive: boolean;
+  features?: any;
+  enabledModules?: any;
   maxBranches: number;
   maxWarehouses: number;
   maxPosTerminals: number;
@@ -90,8 +92,23 @@ export interface CompanyFromAPI {
     users: number;
     products: number;
     orders: number;
+    warehouses?: number;
+    posTerminals?: number;
   };
   createdAt: string;
+}
+
+export interface BranchTelemetry {
+  id: string;
+  name: string;
+  code: string;
+  isHq: boolean;
+  isActive: boolean;
+  usersCount: number;
+  warehouses: { id: string; name: string }[];
+  warehousesCount: number;
+  status: 'ONLINE' | 'OFFLINE';
+  lastSyncAt: string;
 }
 
 export async function fetchCompanies(): Promise<CompanyFromAPI[]> {
@@ -106,6 +123,10 @@ export async function createCompany(data: {
   adminFullName?: string;
   adminUsername: string;
   adminPassword: string;
+  maxBranches?: number;
+  maxWarehouses?: number;
+  maxPosTerminals?: number;
+  maxUsers?: number;
 }) {
   return apiFetch('/api/superadmin/companies', {
     method: 'POST',
@@ -120,14 +141,40 @@ export async function updateCompanyStatus(companyId: string, status: 'ACTIVE' | 
   });
 }
 
+export async function updateCompanyFeatures(companyId: string, features: any, enabledModules?: any) {
+  return apiFetch(`/api/superadmin/companies/${companyId}/features`, {
+    method: 'PUT',
+    body: JSON.stringify({ features, enabledModules }),
+  });
+}
+
+export async function updateCompanyQuotas(
+  companyId: string,
+  quotas: {
+    maxBranches?: number;
+    maxWarehouses?: number;
+    maxPosTerminals?: number;
+    maxUsers?: number;
+  }
+) {
+  return apiFetch(`/api/superadmin/companies/${companyId}/quotas`, {
+    method: 'PUT',
+    body: JSON.stringify(quotas),
+  });
+}
+
+export async function fetchCompanyBranches(companyId: string): Promise<BranchTelemetry[]> {
+  return apiFetch(`/api/superadmin/companies/${companyId}/branches`);
+}
+
 // ═══════════════════════════════════════
 // LICENSES & HWID
 // ═══════════════════════════════════════
 
-export async function generateLicense(companyId: string, planName: string, durationMonths = 12) {
+export async function generateLicense(companyId: string, planName: string, durationMonths = 12, hwid?: string) {
   return apiFetch('/api/superadmin/licenses/generate', {
     method: 'POST',
-    body: JSON.stringify({ companyId, planName, durationMonths }),
+    body: JSON.stringify({ companyId, planName, durationMonths, hwid: hwid?.trim() || undefined }),
   });
 }
 
@@ -177,16 +224,80 @@ export async function fetchLogs(options?: { companyId?: string; level?: string; 
 // ADVANCED FINANCIALS & DATA
 // ═══════════════════════════════════════
 
-export interface GlobalStats {
-  totalCompanies: number;
-  totalRevenue: number;
-  totalOrders: number;
-  mrrHistory: number[];
-  averageOrderValue: number;
+export interface CompanyFinancialItem {
+  id: string;
+  name: string;
+  planName: string;
+  isActive: boolean;
+  ordersCount: number;
+  grossSales: number;
+  discounts: number;
+  totalSales: number;
+  returns: number;
+  netSales: number;
+  cogs: number;
+  grossProfit: number;
+  expenses: number;
+  purchases: number;
+  netProfit: number;
+  profitMargin: number;
 }
 
-export async function fetchGlobalStats(): Promise<GlobalStats> {
-  return apiFetch('/api/superadmin/global-stats');
+export interface TimelineItem {
+  key: string;
+  label: string;
+  sales: number;
+  orders: number;
+  cogs: number;
+  expenses: number;
+  netProfit: number;
+}
+
+export interface ExpenseBreakdownItem {
+  id: string;
+  title: string;
+  description: string;
+  amount: number;
+  date: string;
+  companyId: string;
+  companyName: string;
+}
+
+export interface GlobalStats {
+  totalCompanies: number;
+  totalOrders: number;
+  totalSubTotal?: number;
+  totalDiscounts?: number;
+  totalRevenue: number;
+  totalSales?: number;
+  totalReturns?: number;
+  netSales?: number;
+  totalCOGS?: number;
+  grossProfit?: number;
+  totalExpenses?: number;
+  totalPurchases?: number;
+  netProfit?: number;
+  profitMargin?: number;
+  averageOrderValue: number;
+  mrrHistory: number[];
+  timelineData?: TimelineItem[];
+  companyBreakdown?: CompanyFinancialItem[];
+  expensesList?: ExpenseBreakdownItem[];
+}
+
+export interface GlobalStatsOptions {
+  startDate?: string;
+  endDate?: string;
+  companyId?: string;
+}
+
+export async function fetchGlobalStats(options?: GlobalStatsOptions): Promise<GlobalStats> {
+  const params = new URLSearchParams();
+  if (options?.startDate) params.set('startDate', options.startDate);
+  if (options?.endDate) params.set('endDate', options.endDate);
+  if (options?.companyId && options.companyId !== 'all') params.set('companyId', options.companyId);
+  const qs = params.toString();
+  return apiFetch(`/api/superadmin/global-stats${qs ? `?${qs}` : ''}`);
 }
 
 export interface InvoiceFromAPI {
@@ -196,14 +307,52 @@ export interface InvoiceFromAPI {
   total: number;
   paymentStatus: string;
   createdAt: string;
-  company: { name: string };
+  company: { id?: string; name: string };
   user?: { fullName: string; username: string };
   items: any[];
 }
 
-export async function fetchGlobalInvoices(page = 1, search = ''): Promise<{ data: InvoiceFromAPI[], pagination: any }> {
-  const qs = `?page=${page}&limit=20${search ? `&search=${encodeURIComponent(search)}` : ''}`;
-  return apiFetch(`/api/superadmin/global-invoices${qs}`);
+export interface GlobalInvoicesOptions {
+  page?: number;
+  limit?: number;
+  search?: string;
+  startDate?: string;
+  endDate?: string;
+  companyId?: string;
+}
+
+export async function fetchGlobalInvoices(
+  pageOrOptions: number | GlobalInvoicesOptions = 1,
+  legacySearch: string = ''
+): Promise<{ data: InvoiceFromAPI[], pagination: any }> {
+  let page = 1;
+  let limit = 20;
+  let search = '';
+  let startDate = '';
+  let endDate = '';
+  let companyId = '';
+
+  if (typeof pageOrOptions === 'object') {
+    page = pageOrOptions.page || 1;
+    limit = pageOrOptions.limit || 20;
+    search = pageOrOptions.search || '';
+    startDate = pageOrOptions.startDate || '';
+    endDate = pageOrOptions.endDate || '';
+    companyId = pageOrOptions.companyId || '';
+  } else {
+    page = pageOrOptions;
+    search = legacySearch;
+  }
+
+  const params = new URLSearchParams();
+  params.set('page', String(page));
+  params.set('limit', String(limit));
+  if (search) params.set('search', search);
+  if (startDate) params.set('startDate', startDate);
+  if (endDate) params.set('endDate', endDate);
+  if (companyId && companyId !== 'all') params.set('companyId', companyId);
+
+  return apiFetch(`/api/superadmin/global-invoices?${params.toString()}`);
 }
 
 export async function updateSubscriptionAdvanced(companyId: string, data: {
@@ -235,7 +384,7 @@ export async function downloadCompanyBackup(companyId: string, companyName: stri
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `backup_${companyName.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.db`;
+  a.download = `backup_${companyName.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -355,3 +504,73 @@ export async function createClientPaymentRequest(data: any) {
         body: JSON.stringify(data)
     });
 }
+
+// ═══════════════════════════════════════
+// NOTIFICATIONS MANAGEMENT (SUPERADMIN)
+// ═══════════════════════════════════════
+
+export interface NotificationItem {
+  id: string;
+  title: string;
+  message: string;
+  type: string;
+  targetType: string;
+  targetUserIds?: string;
+  targetCompanyIds?: string | null;
+  targetPlatform?: 'ALL' | 'WEB' | 'DESKTOP';
+  imageUrl?: string | null;
+  imagePlacement?: 'TOP' | 'SIDE' | 'IMAGE_ONLY' | 'OVERLAY';
+  actionLabel?: string | null;
+  actionUrl?: string | null;
+  isActive: boolean;
+  priority: 'NORMAL' | 'URGENT' | 'INFO';
+  expiresAt?: string | null;
+  styleConfig?: any;
+  createdAt: string;
+}
+
+export async function fetchAdminNotifications(): Promise<NotificationItem[]> {
+  return apiFetch('/api/superadmin/notifications');
+}
+
+export async function createAdminNotification(data: any): Promise<any> {
+  return apiFetch('/api/superadmin/notifications', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function toggleAdminNotification(id: string): Promise<any> {
+  return apiFetch(`/api/superadmin/notifications/${id}/toggle`, {
+    method: 'PATCH',
+  });
+}
+
+export async function deleteAdminNotification(id: string): Promise<any> {
+  return apiFetch(`/api/superadmin/notifications/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+export async function fetchTargetUsers(): Promise<{ id: string; name: string; username: string; companyName?: string }[]> {
+  return apiFetch('/api/superadmin/target-users');
+}
+
+
+export async function fetchReleases(): Promise<any[]> {
+  return apiFetch(`/api/superadmin/releases`);
+}
+
+export async function publishRelease(data: any): Promise<any> {
+  return apiFetch(`/api/superadmin/releases`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function toggleRelease(id: string): Promise<any> {
+  return apiFetch(`/api/superadmin/releases/${id}/toggle`, {
+    method: "PUT",
+  });
+}
+

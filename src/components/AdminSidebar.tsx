@@ -21,6 +21,10 @@ import {
   Receipt,
   CreditCard,
   CheckSquare,
+  Bell,
+  Sparkles,
+  RefreshCw,
+  ShieldCheck,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAdminStore } from "../store/adminStore";
@@ -41,9 +45,10 @@ export default function AdminSidebar() {
 
   const navSections = [
     {
-      title: "الرئيسية",
+      title: "الرئيسية والتحكم المباشر",
       items: [
         { href: "/admin", icon: LayoutDashboard, label: "لوحة التحكم" },
+        { href: "/admin/notifications", icon: Bell, label: "مركز الإشعارات والبث", badge: "جديد" },
       ],
     },
     {
@@ -60,10 +65,11 @@ export default function AdminSidebar() {
     {
       title: "إدارة العملاء والنظام",
       items: [
-        { href: "/admin/clients", icon: Building2, label: "إدارة العملاء" },
+        { href: "/admin/clients", icon: Building2, label: "إدارة العملاء والميزات", badge: "تحكم الميزات" },
         { href: "/admin/payment-methods", icon: CreditCard, label: "حسابات الاستلام" },
         { href: "/admin/payment-approvals", icon: CheckSquare, label: "موافقات الدفع" },
         { href: "/admin/invoices", icon: Receipt, label: "متصفح الفواتير" },
+        { href: "/admin/releases", icon: RefreshCw, label: "التحديثات والإصدارات (OTA)" },
         { href: "/admin/logs", icon: Terminal, label: "سجلات النظام" },
         { href: "/admin/stats", icon: TrendingUp, label: "التقارير المالية" },
         { href: "/admin/settings", icon: Settings, label: "الإعدادات العامة" },
@@ -74,26 +80,43 @@ export default function AdminSidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-white border-l border-slate-200" dir="rtl">
       {/* Brand */}
-      <div className="flex flex-col px-6 py-6 border-b border-slate-200 shrink-0 gap-4">
-        <Link to="/admin" className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white p-1">
-            <Layers className="w-5 h-5" />
+      <div className="flex flex-col px-6 py-5 border-b border-slate-200 shrink-0 gap-3">
+        <Link to="/admin" className="flex items-center gap-3 group">
+          <div className="h-10 px-2 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
+            <img
+              src="/logo-main.png"
+              alt="منظومة"
+              className="h-7 w-auto object-contain"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = '/cdn/logo.png';
+              }}
+            />
           </div>
-          <span className="text-slate-900 font-[900] text-xl leading-tight">{config.siteName}</span>
+          <div className="flex flex-col">
+            <span className="text-slate-900 font-[900] text-lg leading-tight">منظومة ERP</span>
+            <span className="text-[10px] text-slate-400 font-bold">لوحة التحكم المركزية HQ</span>
+          </div>
         </Link>
-        {/* Mock Store Selector matching the design */}
-        <button className="flex items-center justify-between w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors">
+
+        {/* Live Cloud Status Badge */}
+        <div className="flex items-center justify-between w-full px-3 py-2 rounded-xl border border-indigo-100 bg-gradient-to-r from-indigo-50/70 via-slate-50 to-blue-50/50 shadow-2xs">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-indigo-500 flex items-center justify-center text-white text-xs font-bold">C</div>
-            <span className="text-sm font-bold text-slate-700">Capstore</span>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="text-[11px] font-bold text-slate-700">السيرفر السحابي متصل</span>
           </div>
-          <Menu className="w-4 h-4 text-slate-400 rotate-90" />
-        </button>
+          <span className="text-[9px] font-black bg-white px-2 py-0.5 rounded-md border border-indigo-200/60 text-indigo-700 shadow-2xs">
+            SUPER_ADMIN
+          </span>
+        </div>
+
         <button
           onClick={() => setMobileOpen(false)}
-          className="md:hidden text-white/40 hover:text-white transition-colors"
+          className="md:hidden text-slate-400 hover:text-slate-700 transition-colors self-end"
         >
-          <X className="w-6 h-6" />
+          <X className="w-5 h-5" />
         </button>
       </div>
 
@@ -125,8 +148,13 @@ export default function AdminSidebar() {
                       }`}
                     />
                     <span>{item.label}</span>
+                    {item.badge && (
+                      <span className="mr-auto px-1.5 py-0.5 bg-indigo-600 text-white text-[9px] font-black rounded-md shadow-xs animate-pulse">
+                        {item.badge}
+                      </span>
+                    )}
                     {/* Mock Notification Badge for specific items */}
-                    {(item.label === "الطلبات" || item.label === "إدارة العملاء") && (
+                    {!item.badge && (item.label === "الطلبات" || item.label === "إدارة العملاء") && (
                       <span className="mr-auto w-5 h-5 flex items-center justify-center bg-slate-100 text-slate-500 text-[10px] font-bold rounded-md">
                         2
                       </span>
@@ -164,10 +192,17 @@ export default function AdminSidebar() {
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between bg-white text-slate-900 px-6 py-4 shrink-0 border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <Link to="/admin" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
-            <Layers className="w-5 h-5" />
+          <div className="h-8 px-1.5 rounded-lg bg-white border border-slate-200 flex items-center justify-center">
+            <img
+              src="/logo-main.png"
+              alt="منظومة"
+              className="h-5 w-auto object-contain"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = '/cdn/logo.png';
+              }}
+            />
           </div>
-          <span className="font-[900] text-slate-900 text-lg">{config.siteName}</span>
+          <span className="font-[900] text-slate-900 text-base">منظومة ERP</span>
         </Link>
         <button
           onClick={() => setMobileOpen(true)}

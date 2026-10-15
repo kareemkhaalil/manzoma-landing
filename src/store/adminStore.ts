@@ -20,6 +20,8 @@ export interface Package {
   features: string[];
   maxUsers: number;
   maxBranches: number;
+  maxWarehouses?: number;
+  maxPosTerminals?: number;
   hasWhatsApp: boolean;
   hasOfflineSync: boolean;
   isPopular?: boolean;
@@ -121,6 +123,13 @@ export interface SiteConfig {
     backgroundColor: string;
   };
   pages: DynamicPage[];
+  download?: {
+    windowsUrl: string;
+    version: string;
+    fileSize: string;
+    releaseDate: string;
+    fileSha256?: string;
+  };
 }
 
 export interface DashboardStats {
@@ -131,7 +140,7 @@ export interface DashboardStats {
   averageOrderValue: number;
 }
 
-interface AdminState {
+export interface AdminState {
   theme: "light" | "dark";
   config: SiteConfig;
   packages: Package[];
@@ -190,6 +199,8 @@ const defaultPackages: Package[] = [
     priceSuffix: "جنيه / شهرياً",
     maxUsers: 2,
     maxBranches: 1,
+    maxWarehouses: 1,
+    maxPosTerminals: 1,
     hasWhatsApp: false,
     hasOfflineSync: true,
     features: [
@@ -210,6 +221,8 @@ const defaultPackages: Package[] = [
     priceSuffix: "جنيه / شهرياً",
     maxUsers: 5,
     maxBranches: 3,
+    maxWarehouses: 2,
+    maxPosTerminals: 3,
     hasWhatsApp: true,
     hasOfflineSync: true,
     features: [
@@ -232,6 +245,8 @@ const defaultPackages: Package[] = [
     priceSuffix: "جنيه / شهرياً",
     maxUsers: 999, // Unlimited
     maxBranches: 999, // Unlimited
+    maxWarehouses: 999,
+    maxPosTerminals: 999,
     hasWhatsApp: true,
     hasOfflineSync: true,
     features: [
@@ -401,6 +416,12 @@ const defaultConfig: SiteConfig = {
       order: 3 
     }
   ],
+  download: {
+    windowsUrl: "https://github.com/kareemkhaalil/manzoma-erp-release/releases/download/v1.5.0/Manzoma.ERP-Setup-1.5.0.exe",
+    version: "v1.5.0",
+    fileSize: "226 MB",
+    releaseDate: "سبتمبر 2026",
+  },
 };
 
 export const useAdminStore = create<AdminState>()(
@@ -490,9 +511,11 @@ export const useAdminStore = create<AdminState>()(
             marqueeItems: newConfig.marqueeItems,
             promoBar: newConfig.promoBar,
             sideBadge: newConfig.sideBadge,
+            download: newConfig.download,
           },
           pricing: {
             trialDays: newConfig.trialDays,
+            packages: state.packages,
           },
           seo: {},
           socialLinks: newConfig.socialLinks,
@@ -502,7 +525,37 @@ export const useAdminStore = create<AdminState>()(
         
         return { config: newConfig };
       }),
-      updatePackages: (packages) => set({ packages }),
+      updatePackages: (packages) => set((state) => {
+        // Sync packages to backend cloud config
+        const payload = {
+          hero: state.config.hero,
+          features: state.config.features,
+          testimonials: [],
+          appearance: {
+            siteName: state.config.siteName,
+            logoUrl: state.config.logoUrl,
+            iconUrl: state.config.iconUrl,
+            patternUrl: state.config.patternUrl,
+            primaryColor: state.config.primaryColor,
+            navyColor: state.config.navyColor,
+            emeraldColor: state.config.emeraldColor,
+            designTokens: state.config.designTokens,
+            marqueeConfig: state.config.marqueeConfig,
+            marqueeItems: state.config.marqueeItems,
+            promoBar: state.config.promoBar,
+            sideBadge: state.config.sideBadge,
+            download: state.config.download,
+          },
+          pricing: {
+            trialDays: state.config.trialDays,
+            packages: packages,
+          },
+          seo: {},
+          socialLinks: state.config.socialLinks,
+        };
+        updatePublicConfig(payload).catch(e => console.error('Failed to sync packages to backend', e));
+        return { packages };
+      }),
       updateSubscriptions: (subscriptions) => set({ subscriptions }),
       updateStats: (newStats) => set((state) => ({ stats: { ...state.stats, ...newStats } })),
       
@@ -540,10 +593,18 @@ export const useAdminStore = create<AdminState>()(
                 // Unpack pricing
                 trialDays: pricing.trialDays || state.config.trialDays,
                 
+                // Unpack download
+                download: app.download || state.config.download,
+                
                 // Pages from API
                 pages: pages && pages.length > 0 ? pages : state.config.pages,
               };
-              return { config: mergedConfig };
+              return {
+                config: mergedConfig,
+                packages: (pricing.packages && Array.isArray(pricing.packages) && pricing.packages.length > 0)
+                  ? pricing.packages
+                  : state.packages
+              };
             });
           }
         } catch (e) {

@@ -3,9 +3,9 @@ import { useAdminStore } from "../../store/adminStore";
 import { translations } from "../../lib/translations";
 
 export default function MarqueeTape() {
-  const store = useAdminStore() || {};
-  const config = store.config || {};
-  const language = store.language || "ar";
+  const store = useAdminStore();
+  const config = store.config;
+  const language = store.language;
   
   const langKey = language === "en" ? "en" : "ar";
   const t = translations[langKey] || translations["ar"];

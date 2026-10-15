@@ -36,7 +36,8 @@ import {
   Receipt,
   Printer,
   Calculator,
-  MessageSquare
+  MessageSquare,
+  Download
 } from "lucide-react";
 import { useAdminStore } from "../store/adminStore";
 import { translations } from "../lib/translations";
@@ -60,10 +61,10 @@ const stagger = {
 };
 
 export default function LandingPage() {
-  const store = useAdminStore() || {};
-  const config = store.config || {};
-  const packages = store.packages || [];
-  const language = store.language || "ar";
+  const store = useAdminStore();
+  const config = store.config;
+  const packages = store.packages;
+  const language = store.language;
   const isDark = store.theme === "dark";
   const setTheme = store.setTheme;
 
@@ -130,6 +131,7 @@ export default function LandingPage() {
   const [ctaEmailInput, setCtaEmailInput] = useState("");
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("yearly");
   const [activeCompareTab, setActiveCompareTab] = useState<"excel" | "desktop" | "cloud">("excel");
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   // Calculator Widget State
   const [calcBranches, setCalcBranches] = useState(3);
@@ -304,13 +306,16 @@ export default function LandingPage() {
             className="lg:col-span-7 space-y-7 text-right flex flex-col items-start"
             style={{ textAlign: isAr ? "right" : "left", alignItems: isAr ? "flex-start" : "flex-start" }}
           >
-            {/* Tag Badge / Audience Qualifier */}
-            <motion.div
-              variants={fadeUp}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-[#1F41AD] dark:text-indigo-300 shadow-sm"
-            >
-              <ShieldCheck className="w-4 h-4 text-[#1F41AD] dark:text-indigo-400 shrink-0" />
-              <span>{t.heroBadge}</span>
+            {/* Tag Badge / Audience Qualifier with direct link to download */}
+            <motion.div variants={fadeUp}>
+              <Link
+                to="/download"
+                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-black bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 shadow-sm hover:scale-105 transition-all group cursor-pointer"
+              >
+                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping shrink-0" />
+                <span>🚀 متاح الآن للتحميل: برنامج منظومة المكتبي للويندوز – يعمل بدون إنترنت</span>
+                <ArrowLeft className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 group-hover:-translate-x-1 transition-transform" />
+              </Link>
             </motion.div>
 
             {/* Exactly One H1 */}
@@ -333,11 +338,19 @@ export default function LandingPage() {
               {t.heroSubtitle}
             </motion.p>
 
-            {/* CTAs: Primary Demo, Secondary WhatsApp, and Signup */}
+            {/* CTAs: Primary Download, Demo, WhatsApp, and Signup */}
             <motion.div
               variants={fadeUp}
               className="flex flex-wrap items-center gap-3 pt-2 w-full"
             >
+              <Link
+                to="/download"
+                className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-black px-7 py-3.5 rounded-xl shadow-xl shadow-emerald-600/30 transition-all hover:scale-105 active:scale-95 flex items-center gap-2.5 border border-emerald-400/40 ring-2 ring-emerald-500/20 cursor-pointer"
+              >
+                <Download className="w-4.5 h-4.5 text-white animate-bounce shrink-0" />
+                <span>تحميل برنامج الكاشير للكمبيوتر</span>
+              </Link>
+
               <a
                 href="#how-it-works"
                 className="bg-[#1F41AD] hover:bg-indigo-700 text-white text-xs sm:text-sm font-black px-6 py-3.5 rounded-xl shadow-lg shadow-indigo-600/20 transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
@@ -362,6 +375,25 @@ export default function LandingPage() {
               >
                 {t.heroCTAStart} ←
               </Link>
+            </motion.div>
+
+            {/* Desktop App Highlights */}
+            <motion.div
+              variants={fadeUp}
+              className="p-3 rounded-2xl bg-white/80 dark:bg-[#0D0C14]/80 backdrop-blur-xs border border-slate-200 dark:border-slate-800 shadow-2xs flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-bold text-slate-600 dark:text-slate-300"
+            >
+              <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                <Check className="w-3.5 h-3.5 shrink-0" />
+                <span>نسخة ويندوز فائقة السرعة</span>
+              </div>
+              <div className="flex items-center gap-1 text-indigo-600 dark:text-indigo-400">
+                <WifiOff className="w-3.5 h-3.5 shrink-0" />
+                <span>تعمل 100% بدون إنترنت مع مزامنة سحابية</span>
+              </div>
+              <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
+                <Printer className="w-3.5 h-3.5 shrink-0" />
+                <span>دعم كامل للطابعات والباركود</span>
+              </div>
             </motion.div>
 
             {/* Trust Badges */}

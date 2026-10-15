@@ -4,10 +4,12 @@ import LandingPage from "./pages/LandingPage";
 import { useAdminStore } from "./store/adminStore";
 import FloatingWhatsApp from "./components/landing/FloatingWhatsApp";
 import BottomNav from "./components/landing/BottomNav";
+import SiteNotificationReceiver from "./components/SiteNotificationReceiver";
 
 const AdminDashboard = React.lazy(() => import("./pages/AdminDashboard"));
 const AdminLogin = React.lazy(() => import("./pages/AdminLogin"));
 const SignupPage = React.lazy(() => import("./pages/SignupPage"));
+const DownloadPage = React.lazy(() => import("./pages/DownloadPage"));
 const DynamicPage = React.lazy(() => import("./pages/DynamicPage"));
 const AcademyPage = React.lazy(() => import("./pages/AcademyPage"));
 const BlogPage = React.lazy(() => import("./pages/BlogPage"));
@@ -45,30 +47,32 @@ function AppContent() {
   return (
     <>
       <Suspense fallback={<RouteLoader />}>
-      <Routes>
-        {/* Public Pages */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/academy" element={<AcademyPage />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/:slug" element={<BlogPostPage />} />
-        <Route path="/integration" element={<IntegrationPage />} />
-        <Route path="/docs" element={<DocsPage />} />
-        <Route path="/page/:slug" element={<DynamicPage />} />
+        <Routes>
+          {/* Public Pages */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/download" element={<DownloadPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/academy" element={<AcademyPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/integration" element={<IntegrationPage />} />
+          <Route path="/docs" element={<DocsPage />} />
+          <Route path="/page/:slug" element={<DynamicPage />} />
 
-        {/* Client Portal */}
-        <Route path="/login" element={<ClientLogin />} />
-        <Route path="/account" element={<ClientPortalLayout />}>
-          <Route index element={<AccountOverview />} />
-          <Route path="subscription" element={<AccountSubscription />} />
-        </Route>
+          {/* Client Portal */}
+          <Route path="/login" element={<ClientLogin />} />
+          <Route path="/account" element={<ClientPortalLayout />}>
+            <Route index element={<AccountOverview />} />
+            <Route path="subscription" element={<AccountSubscription />} />
+          </Route>
 
-        {/* Admin (SuperAdmin only) */}
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin/*" element={<AdminDashboard />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+          {/* Admin (SuperAdmin only) */}
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admin/*" element={<AdminDashboard />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </Suspense>
+      {!isAdminRoute && <SiteNotificationReceiver />}
       {!isAdminRoute && <FloatingWhatsApp />}
       {!isAdminRoute && <BottomNav />}
     </>

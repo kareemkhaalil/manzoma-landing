@@ -17,12 +17,14 @@ export default function SubscriptionsList() {
 
   const getPackageName = (id: string) => packages.find((p) => p.id === id)?.name || "غير معروفة";
 
-  const filtered = subscriptions.filter((sub) => {
+  const safeSubs = Array.isArray(subscriptions) ? subscriptions : [];
+  const filtered = safeSubs.filter((sub) => {
+    if (!sub) return false;
     const searchLower = search.toLowerCase();
     const matchSearch = search === "" || 
-      sub.storeName.includes(searchLower) || 
-      sub.ownerName.includes(searchLower) || 
-      sub.email.toLowerCase().includes(searchLower) ||
+      (sub.storeName && sub.storeName.includes(searchLower)) || 
+      (sub.ownerName && sub.ownerName.includes(searchLower)) || 
+      (sub.email && sub.email.toLowerCase().includes(searchLower)) ||
       (sub.phone && sub.phone.includes(searchLower)) ||
       (sub.licenseKey && sub.licenseKey.toLowerCase().includes(searchLower));
     

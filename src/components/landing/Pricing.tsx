@@ -7,7 +7,8 @@ import { useAdminStore } from "../../store/adminStore";
 export default function Pricing() {
   const { packages, config } = useAdminStore();
   const [yearly, setYearly] = useState(false);
-  const visiblePackages = packages.filter((p) => p.visible !== false);
+  const pkgList = Array.isArray(packages) ? packages : [];
+  const visiblePackages = pkgList.filter((p) => p && p.visible !== false);
 
   return (
     <section id="pricing" className="py-24 md:py-32 bg-brand-bg relative z-10">

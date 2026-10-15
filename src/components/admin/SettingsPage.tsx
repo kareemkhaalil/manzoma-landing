@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useAdminStore } from "../../store/adminStore";
-import { Save, Building2, Bell, Key, AlertTriangle } from "lucide-react";
+import { Save, Building2, Bell, Key, AlertTriangle, Download } from "lucide-react";
 
 export default function SettingsPage() {
   const { config, updateConfig } = useAdminStore();
   const [companyName, setCompanyName] = useState(config.siteName);
   const [trialDays, setTrialDays] = useState(config.trialDays.toString());
+  const [downloadUrl, setDownloadUrl] = useState(config.download?.windowsUrl || "/downloads/Manzoma-ERP-Setup.exe");
+  const [appVersion, setAppVersion] = useState(config.download?.version || "v1.4.9");
+  const [fileSize, setFileSize] = useState(config.download?.fileSize || "250 MB");
+  const [releaseDate, setReleaseDate] = useState(config.download?.releaseDate || "سبتمبر 2026");
   const [saved, setSaved] = useState(false);
 
   const handleSave = () => {
@@ -13,6 +17,12 @@ export default function SettingsPage() {
       ...prev,
       siteName: companyName,
       trialDays: parseInt(trialDays) || 14,
+      download: {
+        windowsUrl: downloadUrl,
+        version: appVersion,
+        fileSize: fileSize,
+        releaseDate: releaseDate,
+      },
     }));
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -100,6 +110,38 @@ export default function SettingsPage() {
           <InputField label="عدد أيام الفترة التجريبية" value={trialDays} onChange={setTrialDays} type="number" dir="ltr" />
           <p className="text-xs font-medium text-slate-500">
             سيتم تطبيق هذا الإعداد على جميع المشتركين الجدد تلقائياً.
+          </p>
+        </Card>
+
+        {/* Desktop Download Settings */}
+        <Card title="إعدادات تحميل برنامج الويندوز (Desktop POS)" icon={Download}>
+          <InputField 
+            label="رابط ملف التثبيت المباشر (EXE URL)" 
+            value={downloadUrl} 
+            onChange={setDownloadUrl} 
+            dir="ltr" 
+          />
+          <div className="grid grid-cols-2 gap-3">
+            <InputField 
+              label="رقم الإصدار (Version)" 
+              value={appVersion} 
+              onChange={setAppVersion} 
+              dir="ltr" 
+            />
+            <InputField 
+              label="حجم الملف (File Size)" 
+              value={fileSize} 
+              onChange={setFileSize} 
+              dir="ltr" 
+            />
+          </div>
+          <InputField 
+            label="تاريخ الإصدار (Release Date)" 
+            value={releaseDate} 
+            onChange={setReleaseDate} 
+          />
+          <p className="text-xs font-medium text-slate-500">
+            هذا الرابط يتحكم في جميع أزرار تحميل البرنامج على الموقع (الصفحة الرئيسية وصفحة التحميل).
           </p>
         </Card>
 
