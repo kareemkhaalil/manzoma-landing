@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Moon, Sun, Download, LogIn, ArrowRight, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,10 +14,19 @@ interface NavbarProps {
 export default function Navbar({ isDark = false, onToggleTheme, theme = "default" }: NavbarProps) {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { language, setLanguage, config, theme: storedTheme, setTheme } = useAdminStore();
   const resolvedDark = onToggleTheme ? isDark : storedTheme === "dark";
   const isAr = language === "ar";
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 25);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleTheme = () => {
     if (onToggleTheme) {
@@ -45,18 +54,27 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
     ? headerLinksArray.map((link) => ({ ...link, to: link.url }))
     : defaultLinks;
 
+  const isTransparentBlue = theme === "blue" && !isScrolled;
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6 pt-3 sm:pt-4" dir={isAr ? "rtl" : "ltr"}>
+    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6 pt-3 sm:pt-4 transition-all duration-300" dir={isAr ? "rtl" : "ltr"}>
       <div className="max-w-[1360px] mx-auto">
-        <nav className="h-16 rounded-2xl px-4 sm:px-6 flex items-center justify-between backdrop-blur-xl bg-white/90 dark:bg-[#0B132B]/90 border border-slate-200/90 dark:border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] transition-all duration-300">
-          
+        <nav
+          className={`h-16 rounded-2xl px-4 sm:px-6 flex items-center justify-between transition-all duration-300 ${
+            isTransparentBlue
+              ? "bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-lg shadow-black/5"
+              : "backdrop-blur-xl bg-white/90 dark:bg-[#0B132B]/90 border border-slate-200/90 dark:border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] text-slate-900 dark:text-white"
+          }`}
+        >
           {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-3 shrink-0" aria-label={config.siteName || "Manzoma"}>
             <img
               src={config.logoUrl || "/cdn/Asset 1.png"}
               onError={(event) => { event.currentTarget.src = "/cdn/Asset 1.png"; }}
               alt={config.siteName || "Manzoma"}
-              className="h-8 sm:h-9 w-auto max-w-36 object-contain"
+              className={`h-8 sm:h-9 w-auto max-w-36 object-contain transition-all ${
+                isTransparentBlue ? "brightness-0 invert drop-shadow" : ""
+              }`}
             />
           </Link>
 
@@ -69,9 +87,13 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
                   key={link.to}
                   to={link.to}
                   className={`px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
-                    isCurrent
-                      ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50/70 dark:bg-indigo-950/40"
-                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-white/5"
+                    isTransparentBlue
+                      ? isCurrent
+                        ? "text-white bg-white/20"
+                        : "text-white/85 hover:text-white hover:bg-white/10"
+                      : isCurrent
+                        ? "text-blue-600 dark:text-blue-400 bg-blue-50/70 dark:bg-blue-950/40"
+                        : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-white/5"
                   }`}
                 >
                   {link.label}
@@ -87,7 +109,11 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
               type="button"
               onClick={toggleTheme}
               aria-label={resolvedDark ? "Switch to light mode" : "Switch to dark mode"}
-              className="w-9 h-9 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all cursor-pointer"
+              className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all cursor-pointer ${
+                isTransparentBlue
+                  ? "text-white/85 hover:text-white hover:bg-white/15"
+                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10"
+              }`}
             >
               {resolvedDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
             </button>
@@ -96,7 +122,11 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
             <button
               type="button"
               onClick={() => setLanguage(isAr ? "en" : "ar")}
-              className="h-9 px-2.5 rounded-xl flex items-center justify-center text-xs font-black font-mono tracking-wider text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-all cursor-pointer"
+              className={`h-9 px-2.5 rounded-xl flex items-center justify-center text-xs font-black font-mono tracking-wider transition-all cursor-pointer ${
+                isTransparentBlue
+                  ? "text-white hover:bg-white/15"
+                  : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10"
+              }`}
               title={isAr ? "Switch to English" : "تحويل إلى العربية"}
             >
               {isAr ? "EN" : "عربي"}
@@ -105,7 +135,11 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
             {/* Login Link */}
             <Link
               to="/login"
-              className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100/60 dark:hover:bg-white/5 transition-all"
+              className={`hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                isTransparentBlue
+                  ? "text-white/90 hover:text-white hover:bg-white/15"
+                  : "text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100/60 dark:hover:bg-white/5"
+              }`}
             >
               <LogIn className="w-3.5 h-3.5 opacity-70" />
               <span>{isAr ? "تسجيل الدخول" : "Sign In"}</span>
@@ -114,7 +148,11 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
             {/* Primary Action Button */}
             <Link
               to="/signup"
-              className="h-9 sm:h-10 px-4 sm:px-5 rounded-xl text-xs sm:text-sm font-black inline-flex items-center justify-center gap-2 text-white bg-indigo-600 hover:bg-indigo-500 shadow-sm shadow-indigo-600/20 active:scale-95 transition-all cursor-pointer"
+              className={`h-9 sm:h-10 px-4 sm:px-5 rounded-xl text-xs sm:text-sm font-black inline-flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md active:scale-95 ${
+                isTransparentBlue
+                  ? "bg-slate-950 text-white hover:bg-black border border-white/20"
+                  : "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/20"
+              }`}
             >
               <span>{t.startFree || (isAr ? "ابدأ مجاناً" : "Get Started")}</span>
               <ArrowIcon className="w-3.5 h-3.5" />
@@ -125,7 +163,11 @@ export default function Navbar({ isDark = false, onToggleTheme, theme = "default
               type="button"
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? "Close Menu" : "Open Menu"}
-              className="lg:hidden w-9 h-9 rounded-xl flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 transition-all cursor-pointer"
+              className={`lg:hidden w-9 h-9 rounded-xl flex items-center justify-center transition-all cursor-pointer ${
+                isTransparentBlue
+                  ? "text-white hover:bg-white/15"
+                  : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10"
+              }`}
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
