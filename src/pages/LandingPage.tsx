@@ -37,7 +37,15 @@ import {
   Printer,
   Calculator,
   MessageSquare,
-  Download
+  Download,
+  Bot,
+  Sparkles,
+  Barcode,
+  Sliders,
+  PauseCircle,
+  QrCode,
+  FileText,
+  CheckSquare
 } from "lucide-react";
 import { useAdminStore } from "../store/adminStore";
 import { translations } from "../lib/translations";
@@ -222,6 +230,50 @@ export default function LandingPage() {
   const [drawerDeclared, setDrawerDeclared] = useState(3550);
   const [drawerActual, setDrawerActual] = useState(3550);
 
+  // Bento Feature 5: AI Telegram Assistant Simulator
+  const [aiPromptIndex, setAiPromptIndex] = useState(0);
+  const aiPrompts = [
+    {
+      q: isAr ? "أرباح اليوم ومبيعات الفروع كام؟" : "What are today's profits across branches?",
+      a: isAr
+        ? "📊 إجمالي مبيعات اليوم: 18,450 ج.م في 3 فروع. صافي الربح التقديري: 4,820 ج.م (هامش ربح 26.1%). الصنف الأكثر مبيعاً: قميص كتان رجالي (34 قطعة)."
+        : "📊 Today's sales: 18,450 EGP across 3 branches. Net profit: 4,820 EGP (26.1% margin). Top seller: Casual Men's Linen Shirt (34 units)."
+    },
+    {
+      q: isAr ? "مين الموردين اللي ليهم فلوس متأخرة؟" : "Which suppliers have overdue balances?",
+      a: isAr
+        ? "📑 إجمالي مستحقات الموردين: 14,200 ج.م. أبرزهم: شركة النيل للأقمشة (8,500 ج.م - استحقاق منذ 3 أيام) ومؤسسة الأهرام (5,700 ج.م)."
+        : "📑 Total supplier payables: 14,200 EGP. Top: Nile Textiles (8,500 EGP - 3 days overdue) and Al-Ahram Trading (5,700 EGP)."
+    },
+    {
+      q: isAr ? "في أي أصناف قربت تخلص من المخزن؟" : "Any items running low on stock?",
+      a: isAr
+        ? "⚠️ تنبيه 3 أصناف بلغت حد الطلب: بنطلون جينز 34 (متبقي 2 قطعة)، طقم حلل جرانيت (متبقي طقم 1)، حذاء كلاسيك أسود 42 (نفد تماماً بالمحل الرئيسي)."
+        : "⚠️ 3 items reached reorder threshold: Denim Jeans 34 (2 left), Granite Cookware Set (1 left), Black Classic Shoes 42 (Out of stock at Main Branch)."
+    }
+  ];
+
+  // Bento Feature 6: Custom Invoice & Barcode Designer
+  const [designerFormat, setDesignerFormat] = useState<"thermal80" | "thermal58" | "label">("thermal80");
+  const [designerShowLogo, setDesignerShowLogo] = useState(true);
+
+  // Bento Feature 7: Continuous Stocktaking Engine
+  const [stocktakeScanned, setStocktakeScanned] = useState(142);
+  const stocktakeTotal = 150;
+  const handleSimulateScan = () => {
+    if (stocktakeScanned < stocktakeTotal) {
+      setStocktakeScanned((prev) => prev + 1);
+    }
+  };
+
+  // Bento Feature 8: Multi-Cart Concurrent POS Hold
+  const [activeMultiCart, setActiveMultiCart] = useState<1 | 2 | 3>(1);
+  const multiCarts = [
+    { id: 1, title: isAr ? "سلة 1 (معلقة - استكمال مقاس)" : "Cart 1 (On Hold - Fitting)", customer: isAr ? "عميل صالة 1" : "Customer A", items: 3, total: 680 },
+    { id: 2, title: isAr ? "سلة 2 (نشطة - جاري الحساب)" : "Cart 2 (Active - Checkout)", customer: isAr ? "عميل كاشير 2" : "Customer B", items: 2, total: 390 },
+    { id: 3, title: isAr ? "سلة 3 (جديدة فارغة)" : "Cart 3 (Empty / New)", customer: isAr ? "عميل جديد +" : "New Customer +", items: 0, total: 0 }
+  ];
+
   // Parallax background configurations
   const pageRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: pageRef });
@@ -260,7 +312,7 @@ export default function LandingPage() {
   return (
     <div
       ref={pageRef}
-      className="min-h-screen overflow-x-clip bg-slate-50 text-slate-900 dark:bg-[#0A192F] dark:text-slate-50 selection:bg-indigo-600 selection:text-white relative"
+      className="min-h-screen overflow-x-clip bg-slate-50 text-slate-900 dark:bg-[#0A192F] dark:text-white selection:bg-[#3B5BFF] selection:text-white relative"
       data-page="landing"
       dir={isAr ? "rtl" : "ltr"}
     >
@@ -269,7 +321,7 @@ export default function LandingPage() {
         style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
           backgroundSize: "24px 24px",
-          color: isDark ? "rgba(99, 102, 241, 0.07)" : "rgba(31, 65, 173, 0.05)"
+          color: isDark ? "rgba(59, 91, 255, 0.07)" : "rgba(31, 65, 173, 0.05)"
         }}
         aria-hidden="true"
       />
@@ -306,22 +358,20 @@ export default function LandingPage() {
             className="lg:col-span-7 space-y-7 text-right flex flex-col items-start"
             style={{ textAlign: isAr ? "right" : "left", alignItems: isAr ? "flex-start" : "flex-start" }}
           >
-            {/* Tag Badge / Audience Qualifier with direct link to download */}
+            {/* Tag Badge / Audience Qualifier */}
             <motion.div variants={fadeUp}>
-              <Link
-                to="/download"
-                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-black bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 shadow-sm hover:scale-105 transition-all group cursor-pointer"
+              <div
+                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-blue-800 dark:text-blue-300 shadow-2xs"
               >
-                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping shrink-0" />
-                <span>🚀 متاح الآن للتحميل: برنامج منظومة المكتبي للويندوز – يعمل بدون إنترنت</span>
-                <ArrowLeft className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 group-hover:-translate-x-1 transition-transform" />
-              </Link>
+                <span className="flex h-2 w-2 rounded-full bg-[#3B5BFF] animate-pulse shrink-0" />
+                <span>{t.heroBadge}</span>
+              </div>
             </motion.div>
 
             {/* Exactly One H1 */}
             <motion.h1
               variants={fadeUp}
-              className="text-3xl sm:text-5xl lg:text-[3.8rem] font-black leading-[1.15] text-slate-900 dark:text-white tracking-tight"
+              className="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.18] text-slate-900 dark:text-white tracking-tight"
             >
               {t.heroHeadlinePart1}
               <br />
@@ -338,24 +388,24 @@ export default function LandingPage() {
               {t.heroSubtitle}
             </motion.p>
 
-            {/* CTAs: Primary Download, Demo, WhatsApp, and Signup */}
+            {/* Unified Professional CTAs */}
             <motion.div
               variants={fadeUp}
               className="flex flex-wrap items-center gap-3 pt-2 w-full"
             >
               <Link
-                to="/download"
-                className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-black px-7 py-3.5 rounded-xl shadow-xl shadow-emerald-600/30 transition-all hover:scale-105 active:scale-95 flex items-center gap-2.5 border border-emerald-400/40 ring-2 ring-emerald-500/20 cursor-pointer"
+                to="/signup"
+                className="bg-[#10B981] hover:bg-[#059669] text-white text-sm sm:text-base font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-emerald-600/25 transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2.5 cursor-pointer group"
               >
-                <Download className="w-4.5 h-4.5 text-white animate-bounce shrink-0" />
-                <span>تحميل برنامج الكاشير للكمبيوتر</span>
+                <span>{t.heroCTAStart}</span>
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               </Link>
 
               <a
-                href="#how-it-works"
-                className="bg-[#1F41AD] hover:bg-indigo-700 text-white text-xs sm:text-sm font-black px-6 py-3.5 rounded-xl shadow-lg shadow-indigo-600/20 transition-all active:scale-95 flex items-center gap-2 cursor-pointer"
+                href="#demo"
+                className="bg-white dark:bg-[#112240] hover:bg-slate-50 dark:hover:bg-[#172A45] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-white text-sm sm:text-base font-bold px-6 py-3.5 rounded-xl shadow-2xs transition-all hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer"
               >
-                <Zap className="w-4 h-4" />
+                <Play className="w-4 h-4 text-[#3B5BFF]" />
                 <span>{t.heroCTADemo}</span>
               </a>
 
@@ -363,36 +413,37 @@ export default function LandingPage() {
                 href="https://wa.me/201099600048"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white dark:bg-[#0D0C14] hover:bg-slate-50 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white text-xs sm:text-sm font-black px-6 py-3.5 rounded-xl shadow-sm transition-all active:scale-95 flex items-center gap-2"
+                className="bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-transparent dark:border-white/5 text-slate-700 dark:text-slate-200 text-sm sm:text-base font-semibold px-5 py-3.5 rounded-xl transition-all flex items-center gap-2"
               >
                 <MessageSquare className="w-4 h-4 text-emerald-500" />
                 <span>{t.heroCTAContact}</span>
               </a>
 
               <Link
-                to="/signup"
-                className="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 transition-colors"
+                to="/download"
+                className="w-full sm:w-auto text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-[#3B5BFF] dark:hover:text-[#3B5BFF] px-2 py-1 flex items-center gap-1.5 transition-colors"
               >
-                {t.heroCTAStart} ←
+                <Download className="w-3.5 h-3.5 text-slate-400" />
+                <span>تحميل تطبيق الكاشير المكتبي (Windows)</span>
               </Link>
             </motion.div>
 
             {/* Desktop App Highlights */}
             <motion.div
               variants={fadeUp}
-              className="p-3 rounded-2xl bg-white/80 dark:bg-[#0D0C14]/80 backdrop-blur-xs border border-slate-200 dark:border-slate-800 shadow-2xs flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-bold text-slate-600 dark:text-slate-300"
+              className="p-3.5 rounded-2xl bg-white/90 dark:bg-[#0D0C14]/90 backdrop-blur-xs border border-slate-200 dark:border-slate-800 shadow-2xs flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-bold text-slate-600 dark:text-slate-300"
             >
-              <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-                <Check className="w-3.5 h-3.5 shrink-0" />
-                <span>نسخة ويندوز فائقة السرعة</span>
+              <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                <Check className="w-4 h-4 shrink-0" />
+                <span>استقرار كامل للكاشير يعمل محلياً دون توقف</span>
               </div>
-              <div className="flex items-center gap-1 text-indigo-600 dark:text-indigo-400">
-                <WifiOff className="w-3.5 h-3.5 shrink-0" />
-                <span>تعمل 100% بدون إنترنت مع مزامنة سحابية</span>
+              <div className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
+                <Globe className="w-4 h-4 shrink-0" />
+                <span>مزامنة سحابية ومتابعة لحظية من الموبايل</span>
               </div>
-              <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
-                <Printer className="w-3.5 h-3.5 shrink-0" />
-                <span>دعم كامل للطابعات والباركود</span>
+              <div className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400">
+                <Printer className="w-4 h-4 shrink-0" />
+                <span>دعم كامل للطابعات والباركود ودرج النقدية</span>
               </div>
             </motion.div>
 
@@ -432,13 +483,13 @@ export default function LandingPage() {
                   <span className="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                     <Lock className="w-4 h-4" />
                   </span>
-                  <span className="text-[10px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full font-black flex items-center gap-1">
+                  <span className="text-xs bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full font-black flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     {isAr ? "الوردية نشطة" : "Active Shift"}
                   </span>
                 </div>
                 <div className="space-y-1">
-                  <div className="text-[10px] text-slate-400 font-bold uppercase">{isAr ? "سجل الوردية" : "Shift Log"}</div>
+                  <div className="text-xs text-slate-400 font-bold uppercase">{isAr ? "سجل الوردية" : "Shift Log"}</div>
                   <div className="text-sm font-black text-slate-800 dark:text-white">{isAr ? "وردية 1 | كاشير رئيسي" : "Shift 1 | Main Register"}</div>
                 </div>
                 <div className="flex justify-between items-center pt-2 border-t border-slate-50 dark:border-slate-800 text-xs">
@@ -458,7 +509,7 @@ export default function LandingPage() {
               <div className="w-full rounded-3xl p-6 glass-dark border border-slate-850/80 text-white space-y-5 shadow-2xl">
                 <div className="flex justify-between items-center">
                   <div>
-                    <span className="text-[10px] text-slate-400 font-bold block">{isAr ? "إجمالي مبيعات اليوم" : "Today's Revenue"}</span>
+                    <span className="text-xs text-slate-400 font-bold block">{isAr ? "إجمالي مبيعات اليوم" : "Today's Revenue"}</span>
                     <span className="text-2xl font-black font-sans tracking-tight">3,050.00 <span className="text-xs text-slate-400">ج.م</span></span>
                   </div>
                   <span className="w-10 h-10 rounded-2xl bg-indigo-600/30 text-indigo-400 flex items-center justify-center">
@@ -474,7 +525,7 @@ export default function LandingPage() {
                   ))}
                 </div>
 
-                <div className="flex justify-between items-center text-[10px] pt-1 text-slate-400 font-bold">
+                <div className="flex justify-between items-center text-xs pt-1 text-slate-400 font-bold">
                   <span>{isAr ? "حالة المزامنة" : "Sync Status"}</span>
                   <span className="text-emerald-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
@@ -497,12 +548,15 @@ export default function LandingPage() {
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     {isAr ? "فواتير الواتساب" : "WhatsApp Receipt"}
                   </span>
-                  <span className="text-[10px] text-slate-400">الآن</span>
+                  <span className="text-xs text-slate-400">الآن</span>
                 </div>
                 <div className="space-y-1.5">
-                  <div className="p-2 bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-slate-800 rounded-xl flex justify-between items-center text-[11px]">
+                  <div className="p-2 bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-slate-800 rounded-xl flex justify-between items-center text-xs">
                     <span className="font-bold text-slate-700 dark:text-slate-300">{isAr ? "قميص كاجوال رجالي" : "Casual Shirt"}</span>
-                    <span className="text-[#1F41AD] dark:text-indigo-400 font-black">💬 {isAr ? "تم الإرسال" : "Sent"}</span>
+                    <span className="text-[#1F41AD] dark:text-blue-400 font-black flex items-center gap-1">
+                      <MessageSquare className="w-3 h-3 text-emerald-500" />
+                      {isAr ? "تم الإرسال" : "Sent"}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -517,7 +571,7 @@ export default function LandingPage() {
          ──────────────────────────────────────────────────────── */}
       <section className="py-10 bg-white dark:bg-[#0A192F]/60 border-y border-slate-100 dark:border-slate-800 overflow-hidden blur-reveal">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-12 text-center space-y-5">
-          <p className="text-[11px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-extrabold">
+          <p className="text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500 font-extrabold">
             {isAr ? "وسائل دفع يمكن تسجيلها وإدارتها داخل النظام" : "Payment methods managed within the system"}
           </p>
           
@@ -568,8 +622,14 @@ export default function LandingPage() {
               key={idx}
               className="rounded-[2rem] border border-slate-150 dark:border-slate-800 bg-white dark:bg-[#0D0C14] p-8 shadow-sm hover:shadow-md transition-all space-y-4"
             >
-              <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-[#1F41AD] dark:text-indigo-400 flex items-center justify-center font-black text-lg font-mono">
-                0{idx + 1}
+              <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center">
+                {idx === 0 ? (
+                  <Zap className="w-6 h-6 text-emerald-500" />
+                ) : idx === 1 ? (
+                  <Package className="w-6 h-6 text-[#3B5BFF]" />
+                ) : (
+                  <ShieldCheck className="w-6 h-6 text-cyan-500" />
+                )}
               </div>
               <h3 className="text-lg font-black text-slate-900 dark:text-white">
                 {item.title}
@@ -620,7 +680,7 @@ export default function LandingPage() {
                     <Icon className="w-5 h-5" />
                   </div>
                   {isSelected && (
-                    <span className="text-[10px] bg-indigo-50 dark:bg-indigo-950 text-[#1F41AD] font-black px-2.5 py-1 rounded-full">
+                    <span className="text-xs bg-indigo-50 dark:bg-indigo-950 text-[#1F41AD] font-black px-2.5 py-1 rounded-full">
                       {isAr ? "نشط" : "Selected"}
                     </span>
                   )}
@@ -706,7 +766,7 @@ export default function LandingPage() {
                       {activeSegment === "homeware" && (isAr ? "كاشير المستلزمات المنزلية" : "Home Goods POS")}
                       {activeSegment === "retail" && (isAr ? "كاشير التجزئة" : "Retail POS")}
                     </span>
-                    <span className="text-[10px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 font-bold px-2 py-0.5 rounded-full">
+                    <span className="text-xs bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 font-bold px-2 py-0.5 rounded-full">
                       {isAr ? "يعمل محلياً" : "Offline Ready"}
                     </span>
                   </div>
@@ -717,14 +777,14 @@ export default function LandingPage() {
                         <div className="p-3 bg-white dark:bg-[#0D0C14] rounded-xl border border-slate-150 dark:border-slate-800 flex justify-between items-center">
                           <div>
                             <span className="font-bold block">قميص كتان رجالي (L / أزرق)</span>
-                            <span className="text-[10px] text-slate-400 font-mono">BARCODE: 6221008921</span>
+                            <span className="text-xs text-slate-400 font-mono">BARCODE: 6221008921</span>
                           </div>
                           <span className="font-black font-mono">350.00 ج.م</span>
                         </div>
                         <div className="p-3 bg-white dark:bg-[#0D0C14] rounded-xl border border-slate-150 dark:border-slate-800 flex justify-between items-center">
                           <div>
                             <span className="font-bold block">بنطلون جينز كاجوال (34 / أسود)</span>
-                            <span className="text-[10px] text-slate-400 font-mono">BARCODE: 6221008922</span>
+                            <span className="text-xs text-slate-400 font-mono">BARCODE: 6221008922</span>
                           </div>
                           <span className="font-black font-mono">420.00 ج.م</span>
                         </div>
@@ -736,14 +796,14 @@ export default function LandingPage() {
                         <div className="p-3 bg-white dark:bg-[#0D0C14] rounded-xl border border-slate-150 dark:border-slate-800 flex justify-between items-center">
                           <div>
                             <span className="font-bold block">طقم حلل جرانيت (10 قطع)</span>
-                            <span className="text-[10px] text-slate-400 font-mono">المخزون: 8 أطقم</span>
+                            <span className="text-xs text-slate-400 font-mono">المخزون: 8 أطقم</span>
                           </div>
                           <span className="font-black font-mono">1,850.00 ج.م</span>
                         </div>
                         <div className="p-3 bg-white dark:bg-[#0D0C14] rounded-xl border border-slate-150 dark:border-slate-800 flex justify-between items-center">
                           <div>
                             <span className="font-bold block">طقم كاسات زجاجي (6 قطع)</span>
-                            <span className="text-[10px] text-slate-400 font-mono">المخزون: 24 طقم</span>
+                            <span className="text-xs text-slate-400 font-mono">المخزون: 24 طقم</span>
                           </div>
                           <span className="font-black font-mono">220.00 ج.م</span>
                         </div>
@@ -755,14 +815,14 @@ export default function LandingPage() {
                         <div className="p-3 bg-white dark:bg-[#0D0C14] rounded-xl border border-slate-150 dark:border-slate-800 flex justify-between items-center">
                           <div>
                             <span className="font-bold block">فاتورة كاشير #8902</span>
-                            <span className="text-[10px] text-slate-400">الكاشير: أحمد ع.</span>
+                            <span className="text-xs text-slate-400">الكاشير: أحمد ع.</span>
                           </div>
                           <span className="font-black font-mono">280.00 ج.م</span>
                         </div>
                         <div className="p-3 bg-white dark:bg-[#0D0C14] rounded-xl border border-slate-150 dark:border-slate-800 flex justify-between items-center">
                           <div>
                             <span className="font-bold block">خصم مالي مسجل (10%)</span>
-                            <span className="text-[10px] text-slate-400">بواسطة: كاشير 1</span>
+                            <span className="text-xs text-slate-400">بواسطة: كاشير 1</span>
                           </div>
                           <span className="font-black font-mono text-emerald-600">-28.00 ج.م</span>
                         </div>
@@ -867,7 +927,7 @@ export default function LandingPage() {
                 />
               </div>
 
-              <div className="pt-3 text-[10px] text-slate-400 dark:text-slate-500 font-bold border-t border-slate-200 dark:border-slate-800 leading-relaxed">
+              <div className="pt-3 text-xs text-slate-400 dark:text-slate-500 font-bold border-t border-slate-200 dark:border-slate-800 leading-relaxed">
                 {isAr ? "تقدير تقريبي قابل للتغيير حسب إعدادات نشاطك — وليس ضماناً مالياً." : "Estimates may vary based on business operations — not a financial guarantee."}
               </div>
             </div>
@@ -880,14 +940,14 @@ export default function LandingPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-150 dark:border-slate-800 space-y-1">
-                  <span className="text-[10px] text-slate-400 font-bold block">{isAr ? "وقت الجرد والتقارير المسترد" : "Inventory Hours Saved"}</span>
+                  <span className="text-xs text-slate-400 font-bold block">{isAr ? "وقت الجرد والتقارير المسترد" : "Inventory Hours Saved"}</span>
                   <span className="text-2xl font-black font-mono text-slate-900 dark:text-white">
                     {calcBranches * calcCashiers * 5} {isAr ? "ساعة" : "Hrs"}
                   </span>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-150 dark:border-slate-800 space-y-1">
-                  <span className="text-[10px] text-slate-400 font-bold block">{isAr ? "توفير بكر الورق بفواتير الواتساب" : "Paper Costs Saved"}</span>
+                  <span className="text-xs text-slate-400 font-bold block">{isAr ? "توفير بكر الورق بفواتير الواتساب" : "Paper Costs Saved"}</span>
                   <span className="text-2xl font-black font-mono text-slate-900 dark:text-white">
                     {Math.round(calcInvoices * 0.35)} {isAr ? "ج.م" : "EGP"}
                   </span>
@@ -983,7 +1043,7 @@ export default function LandingPage() {
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-150 dark:border-slate-800 space-y-4">
                 <div className="flex justify-between items-center">
                   <div className="space-y-0.5">
-                    <span className="text-[10px] text-slate-400 font-bold block">{isAr ? "حالة المعاملات المسجلة" : "Transaction Queue"}</span>
+                    <span className="text-xs text-slate-400 font-bold block">{isAr ? "حالة المعاملات المسجلة" : "Transaction Queue"}</span>
                     <span className="text-sm font-black font-mono dark:text-white">
                       {simSalesCount} {isAr ? "عملية بيع" : "Transactions"}
                     </span>
@@ -991,9 +1051,10 @@ export default function LandingPage() {
                   <button
                     type="button"
                     onClick={addSimSale}
-                    className="bg-slate-900 dark:bg-indigo-600 text-white text-[11px] font-black px-3.5 py-2 rounded-xl hover:bg-slate-800 transition-all cursor-pointer"
+                    className="bg-slate-900 dark:bg-indigo-600 text-white text-xs font-black px-3.5 py-2 rounded-xl hover:bg-slate-800 transition-all cursor-pointer flex items-center gap-1.5"
                   >
-                    ➕ {isAr ? "تجربة بيع صنف" : "Simulate sale"}
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>{isAr ? "تجربة بيع صنف" : "Simulate sale"}</span>
                   </button>
                 </div>
 
@@ -1006,7 +1067,7 @@ export default function LandingPage() {
                       </div>
                       <div className="flex items-center gap-3">
                         <span className="font-bold font-mono text-slate-800 dark:text-white">{tx.amount.toFixed(2)} {isAr ? "ج.م" : "EGP"}</span>
-                        <span className={`text-[10px] font-black ${tx.synced ? "text-emerald-600" : "text-rose-500"}`}>
+                        <span className={`text-xs font-black ${tx.synced ? "text-emerald-600" : "text-rose-500"}`}>
                           {tx.synced ? (isAr ? "مُزامن" : "Synced") : (isAr ? "محلي (جاهز للرفع)" : "Local")}
                         </span>
                       </div>
@@ -1043,17 +1104,18 @@ export default function LandingPage() {
                   <button
                     type="submit"
                     disabled={sendingReceipt}
-                    className="bg-emerald-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-black hover:bg-emerald-600 transition-all cursor-pointer disabled:opacity-50"
+                    className="bg-emerald-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-black hover:bg-emerald-600 transition-all cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
                   >
-                    {sendingReceipt ? (isAr ? "إرسال..." : "Sending...") : (isAr ? "إرسال ⚡" : "Send ⚡")}
+                    <Send className="w-3 h-3" />
+                    <span>{sendingReceipt ? (isAr ? "إرسال..." : "Sending...") : (isAr ? "إرسال الفاتورة" : "Send Receipt")}</span>
                   </button>
                 </form>
 
                 <div className="space-y-1.5 max-h-[120px] overflow-y-auto">
                   {chatLogs.map((log, i) => (
-                    <div key={i} className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-800 p-2.5 rounded-xl text-[11px] text-slate-800 dark:text-emerald-300">
+                    <div key={i} className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-800 p-2.5 rounded-xl text-xs text-slate-800 dark:text-emerald-300">
                       <p>{log.text}</p>
-                      <span className="text-[9px] text-slate-400 block mt-1 font-mono text-left">{log.time}</span>
+                      <span className="text-xs text-slate-400 block mt-1 font-mono text-left">{log.time}</span>
                     </div>
                   ))}
                 </div>
@@ -1085,7 +1147,7 @@ export default function LandingPage() {
                           key={sz}
                           type="button"
                           onClick={() => setSelectedSizes(prev => prev.includes(sz) ? prev.filter(x => x !== sz) : [...prev, sz])}
-                          className={`px-2.5 py-1 rounded-md text-[10px] font-black border transition-all cursor-pointer ${
+                          className={`px-2.5 py-1 rounded-md text-xs font-black border transition-all cursor-pointer ${
                             isSelected ? "bg-[#1F41AD] border-[#1F41AD] text-white" : "bg-white dark:bg-[#0D0C14] border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
                           }`}
                         >
@@ -1106,7 +1168,7 @@ export default function LandingPage() {
                           key={col}
                           type="button"
                           onClick={() => setSelectedColors(prev => prev.includes(col) ? prev.filter(x => x !== col) : [...prev, col])}
-                          className={`px-2.5 py-1 rounded-md text-[10px] font-black border transition-all cursor-pointer ${
+                          className={`px-2.5 py-1 rounded-md text-xs font-black border transition-all cursor-pointer ${
                             isSelected ? "bg-slate-900 border-slate-900 text-white" : "bg-white dark:bg-[#0D0C14] border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
                           }`}
                         >
@@ -1117,7 +1179,7 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                <div className="p-2.5 bg-white dark:bg-[#0D0C14] rounded-xl border border-slate-150 dark:border-slate-800 flex justify-between items-center text-[11px] font-bold">
+                <div className="p-2.5 bg-white dark:bg-[#0D0C14] rounded-xl border border-slate-150 dark:border-slate-800 flex justify-between items-center text-xs font-bold">
                   <span className="text-slate-500 dark:text-slate-400">{isAr ? "الباركود الجاهز:" : "Barcodes ready:"}</span>
                   <span className="text-[#1F41AD] font-black font-sans">
                     {selectedSizes.length * selectedColors.length} {isAr ? "ملصق باركود" : "Barcodes"}
@@ -1182,6 +1244,294 @@ export default function LandingPage() {
               </div>
             </div>
 
+            {/* Card 5: AI Telegram Assistant (Span 7) */}
+            <div className="lg:col-span-7 rounded-[2.5rem] border border-slate-150 dark:border-slate-800 bg-white dark:bg-[#0D0C14] p-8 md:p-10 shadow-sm flex flex-col justify-between space-y-6">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-black uppercase text-indigo-700 bg-indigo-50 dark:bg-indigo-950/70 dark:text-indigo-300 px-3.5 py-1 rounded-full flex items-center gap-1.5 border border-indigo-200 dark:border-indigo-800">
+                    <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                    <span>{t.featAiBadge || "مساعد الذكاء الاصطناعي 🤖"}</span>
+                  </span>
+                  <span className="text-xs bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    {isAr ? "مساعد تليجرام المباشر" : "Live Telegram Bot"}
+                  </span>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                  {t.featAiTitle || "مساعد تليجرام الذكي للأرباح والمبيعات"}
+                </h3>
+                <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed max-w-lg">
+                  {t.featAiDesc || "اسأل النظام صوتياً أو كتابياً من أي مكان: 'أرباح اليوم كام؟'، 'مين الموردين اللي ليهم فلوس؟'، ويصلك الرد لحظياً بتحليل دقيق."}
+                </p>
+              </div>
+
+              {/* Telegram Simulator Box */}
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-150 dark:border-slate-800 space-y-4">
+                {/* Question Pills */}
+                <div className="flex flex-wrap gap-1.5">
+                  {aiPrompts.map((p, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setAiPromptIndex(idx)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        aiPromptIndex === idx
+                          ? "bg-[#1F41AD] text-white shadow-xs"
+                          : "bg-white dark:bg-[#0D0C14] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100"
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5">
+                        {idx === 0 && <TrendingUp className="w-3.5 h-3.5" />}
+                        {idx === 1 && <FileText className="w-3.5 h-3.5" />}
+                        {idx === 2 && <AlertTriangle className="w-3.5 h-3.5" />}
+                        <span>{idx === 0 ? (isAr ? "أرباح اليوم" : "Today's Profit") : idx === 1 ? (isAr ? "ديون الموردين" : "Suppliers Debt") : (isAr ? "نواقص المخزون" : "Low Stock")}</span>
+                      </span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Simulated Chat Thread */}
+                <div className="space-y-3 pt-1">
+                  {/* User query bubble */}
+                  <div className="flex justify-end">
+                    <div className="max-w-[85%] bg-indigo-600 text-white p-3 rounded-2xl rounded-tr-xs text-xs font-medium space-y-1 shadow-2xs">
+                      <p>{aiPrompts[aiPromptIndex].q}</p>
+                      <span className="text-xs text-indigo-200 block text-left font-mono">14:02 ✓✓</span>
+                    </div>
+                  </div>
+
+                  {/* Bot response bubble */}
+                  <div className="flex items-start gap-2.5">
+                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-500/20">
+                      <Bot className="w-4 h-4" />
+                    </div>
+                    <div className="max-w-[85%] bg-white dark:bg-[#0D0C14] border border-slate-200 dark:border-slate-800 p-3.5 rounded-2xl rounded-tl-xs text-xs leading-relaxed text-slate-800 dark:text-slate-200 shadow-2xs space-y-1">
+                      <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white pb-1 border-b border-slate-100 dark:border-slate-800/80">
+                        <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+                        <span>منظومة - المساعد الذكي (Gemini)</span>
+                      </div>
+                      <p>{aiPrompts[aiPromptIndex].a}</p>
+                      <span className="text-xs text-slate-400 block text-left font-mono">14:02</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs font-bold text-slate-500 dark:text-slate-400">
+                  <span className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400">
+                    <Bot className="w-3.5 h-3.5" />
+                    {isAr ? "يدعم الرسائل الصوتية مباشرة عبر تليجرام" : "Supports voice audio queries via Telegram"}
+                  </span>
+                  <span className="font-mono text-emerald-600 dark:text-emerald-400">24/7 Live</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 6: Custom Invoice & Barcode Designer (Span 5) */}
+            <div className="lg:col-span-5 rounded-[2.5rem] border border-slate-150 dark:border-slate-800 bg-white dark:bg-[#0D0C14] p-8 shadow-sm flex flex-col justify-between space-y-6">
+              <div className="space-y-3">
+                <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 dark:bg-indigo-950 px-3 py-1 rounded-full">
+                  {t.featDesignerBadge || "المصمم المرئي 🎨"}
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                  {t.featDesignerTitle || "تصميم الفواتير والباركود المخصص"}
+                </h3>
+                <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                  {t.featDesignerDesc || "تحكم كامل بشكل ومقاس فاتورة الكاشير وإضافة شعار متجرك وبياناتك الضريبية، وتصميم ملصقات باركود الملابس والأحذية حسب احتياجك."}
+                </p>
+              </div>
+
+              {/* Designer Controls & Live Preview */}
+              <div className="p-4 bg-slate-50 dark:bg-white/[0.02] rounded-2xl border border-slate-150 dark:border-slate-800 space-y-3.5 text-xs">
+                {/* Format selection */}
+                <div className="flex gap-1.5">
+                  {[
+                    { id: "thermal80" as const, label: isAr ? "حراري 80 مم" : "80mm Receipt" },
+                    { id: "thermal58" as const, label: isAr ? "حراري 58 مم" : "58mm Receipt" },
+                    { id: "label" as const, label: isAr ? "استيكر ملابس" : "Barcode Sticker" }
+                  ].map((fmt) => (
+                    <button
+                      key={fmt.id}
+                      type="button"
+                      onClick={() => setDesignerFormat(fmt.id)}
+                      className={`flex-1 py-1.5 px-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                        designerFormat === fmt.id
+                          ? "bg-[#1F41AD] border-[#1F41AD] text-white shadow-2xs"
+                          : "bg-white dark:bg-[#0D0C14] border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+                      }`}
+                    >
+                      {fmt.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Live Template Mockup Box */}
+                <div className="p-4 bg-white dark:bg-[#08070D] rounded-xl border border-dashed border-slate-300 dark:border-slate-700 font-mono text-center space-y-2">
+                  {designerFormat === "thermal80" && (
+                    <div className="space-y-1.5 text-slate-800 dark:text-slate-200">
+                      <div className="w-8 h-8 mx-auto rounded-lg bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center text-indigo-600 font-sans font-black text-xs">
+                        LOGO
+                      </div>
+                      <div className="font-bold text-xs">بوتيك الأناقة الراقي</div>
+                      <div className="text-xs text-slate-400">فاتورة رقم: #INV-8902 | 14:30</div>
+                      <div className="border-t border-b border-dashed border-slate-200 dark:border-slate-800 py-1.5 text-xs flex justify-between font-sans">
+                        <span>قميص كتان رجالي (L)</span>
+                        <span className="font-bold">350.00 ج.م</span>
+                      </div>
+                      <div className="flex justify-between font-black text-xs pt-1 font-sans">
+                        <span>الإجمالي:</span>
+                        <span>350.00 ج.م</span>
+                      </div>
+                      <div className="pt-1 flex justify-center">
+                        <QrCode className="w-8 h-8 text-slate-700 dark:text-slate-300" />
+                      </div>
+                      <div className="text-xs text-slate-400">شكراً لزيارتكم الكريمة</div>
+                    </div>
+                  )}
+
+                  {designerFormat === "thermal58" && (
+                    <div className="space-y-1 text-slate-800 dark:text-slate-200 max-w-[200px] mx-auto">
+                      <div className="font-bold text-xs">بوتيك الأناقة (58 مم)</div>
+                      <div className="text-xs text-slate-400">فاتورة مبسطة #INV-8902</div>
+                      <div className="border-t border-b border-dashed border-slate-200 dark:border-slate-800 py-1 text-xs flex justify-between font-sans">
+                        <span>قميص كتان</span>
+                        <span>350 ج.م</span>
+                      </div>
+                      <div className="font-black text-xs font-sans">الإجمالي: 350.00 ج.م</div>
+                    </div>
+                  )}
+
+                  {designerFormat === "label" && (
+                    <div className="p-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50/50 dark:bg-white/[0.02] max-w-[220px] mx-auto space-y-1 text-slate-800 dark:text-slate-200">
+                      <div className="font-bold text-xs">قميص كتان كحلي (Size: L)</div>
+                      <div className="font-black text-sm text-indigo-600 dark:text-indigo-400 font-sans">350.00 ج.م</div>
+                      <div className="pt-0.5 flex justify-center">
+                        <Barcode className="w-24 h-6 text-slate-800 dark:text-white" />
+                      </div>
+                      <div className="text-xs tracking-widest text-slate-400">6221008921</div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex justify-between items-center pt-1 text-xs text-slate-500 font-bold">
+                  <span>{isAr ? "دعم كامل لجميع طابعات الفواتير والملصقات" : "Compatible with all thermal printers"}</span>
+                  <span className="text-emerald-600 font-black">جاهز للطباعة ✓</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 7: Live Continuous Stocktake (Span 6) */}
+            <div className="lg:col-span-6 rounded-[2.5rem] border border-slate-150 dark:border-slate-800 bg-white dark:bg-[#0D0C14] p-8 md:p-10 shadow-sm flex flex-col justify-between space-y-6">
+              <div className="space-y-3">
+                <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 dark:bg-indigo-950 px-3 py-1 rounded-full">
+                  {t.featStocktakeBadge || "محرك الجرد الشامل 📦"}
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                  {t.featStocktakeTitle || "جرد سريع بالسكانر أو الإكسيل دون إيقاف البيع"}
+                </h3>
+                <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                  {t.featStocktakeDesc || "جرد المستودعات والأرفف قسماً بقسم بواسطة قارئ الباركود أو سحب وتصدير شيتات الإكسيل، مع استمرار حركة البيع دون الحاجة لإغلاق المحل."}
+                </p>
+              </div>
+
+              {/* Stocktake Interactive Bar */}
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-150 dark:border-slate-800 space-y-4">
+                <div className="flex justify-between items-center text-xs">
+                  <div className="space-y-0.5">
+                    <span className="font-bold text-slate-700 dark:text-slate-300">{isAr ? "جرد قسم الملابس الرجالي (رف A-12):" : "Auditing Menswear Rack (A-12):"}</span>
+                    <span className="text-xs text-slate-400 block font-mono">{stocktakeScanned} من أصل {stocktakeTotal} صنف</span>
+                  </div>
+                  <span className="font-black font-mono text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-md text-xs">
+                    {Math.round((stocktakeScanned / stocktakeTotal) * 100)}% مكتمل
+                  </span>
+                </div>
+
+                {/* Progress bar */}
+                <div className="w-full bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                  <div
+                    style={{ width: `${(stocktakeScanned / stocktakeTotal) * 100}%` }}
+                    className="h-full bg-gradient-to-r from-emerald-500 to-indigo-600 rounded-full transition-all duration-300"
+                  />
+                </div>
+
+                <div className="flex flex-wrap gap-2 pt-1 items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={handleSimulateScan}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+                  >
+                    <Barcode className="w-4 h-4" />
+                    <span>{isAr ? "مسح صنف بالسكانر (+1)" : "Scan Barcode (+1)"}</span>
+                  </button>
+
+                  <div className="text-xs font-bold text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>{isAr ? "البيع بالكاشير مستمر بدون أي توقف" : "POS checkout remains 100% active"}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 8: Multi-Cart Concurrent POS Hold (Span 6) */}
+            <div className="lg:col-span-6 rounded-[2.5rem] border border-slate-150 dark:border-slate-800 bg-white dark:bg-[#0D0C14] p-8 md:p-10 shadow-sm flex flex-col justify-between space-y-6">
+              <div className="space-y-3">
+                <span className="text-xs font-black uppercase text-[#1F41AD] bg-indigo-50 dark:bg-indigo-950 px-3 py-1 rounded-full">
+                  {t.featMultiCartBadge || "تعدد الفواتير ⚡"}
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                  {t.featMultiCartTitle || "تعليق وفتح فواتير متعددة في نفس اللحظة"}
+                </h3>
+                <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                  {t.featMultiCartDesc || "خدمة عدة عملاء بالتوازي دون تعطيل الطابور؛ يمكنك تعليق فاتورة العميل الذي يستكمل مشترياته ومحاسبة العميل التالي بضغطة زر واحدة."}
+                </p>
+              </div>
+
+              {/* Multi-Cart Interactive Selector */}
+              <div className="p-5 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-150 dark:border-slate-800 space-y-4">
+                {/* Cart Tabs */}
+                <div className="flex gap-2">
+                  {multiCarts.map((c) => (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => setActiveMultiCart(c.id as 1 | 2 | 3)}
+                      className={`flex-1 py-2 px-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer text-center ${
+                        activeMultiCart === c.id
+                          ? "bg-[#1F41AD] border-[#1F41AD] text-white shadow-2xs"
+                          : "bg-white dark:bg-[#0D0C14] border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100"
+                      }`}
+                    >
+                      {c.id === 1 ? (isAr ? "سلة 1 (معلقة)" : "Cart 1 (Hold)") : c.id === 2 ? (isAr ? "سلة 2 (نشطة)" : "Cart 2 (Active)") : (isAr ? "سلة جديدة +" : "New Cart +")}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Selected Cart Content */}
+                <div className="p-3.5 bg-white dark:bg-[#0D0C14] rounded-xl border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
+                  <div className="flex justify-between items-center font-bold">
+                    <span className="text-slate-800 dark:text-slate-200">{multiCarts[activeMultiCart - 1].title}</span>
+                    <span className="font-mono text-indigo-600 dark:text-indigo-400 font-black text-sm">
+                      {multiCarts[activeMultiCart - 1].total > 0 ? `${multiCarts[activeMultiCart - 1].total}.00 ج.م` : (isAr ? "جاهزة للبدء" : "Ready")}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-xs text-slate-500 font-medium pt-1 border-t border-slate-100 dark:border-slate-800">
+                    <span>{isAr ? "العميل المسجل:" : "Customer:"} {multiCarts[activeMultiCart - 1].customer}</span>
+                    <span>{multiCarts[activeMultiCart - 1].items} {isAr ? "أصناف بالسلة" : "items in cart"}</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center pt-1 text-xs font-bold text-slate-500 dark:text-slate-400">
+                  <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                    <CheckCircle className="w-3.5 h-3.5" />
+                    {isAr ? "منع تكدس طوابير الكاشير تماماً" : "Zero cashier bottlenecks"}
+                  </span>
+                  <span className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded-md text-xs font-mono">
+                    F6 Shortcut
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -1205,19 +1555,19 @@ export default function LandingPage() {
 
           <div className="max-w-3xl mx-auto p-8 border border-slate-150 dark:border-slate-800 bg-white dark:bg-[#0D0C14] rounded-[2.5rem] shadow-sm flex flex-col items-center space-y-6">
             <div className="bg-slate-900 text-white p-5 rounded-2xl text-center space-y-1 w-64 shadow-md">
-              <span className="text-[10px] text-indigo-400 font-bold block">{isAr ? "الخادم المركزي" : "Central Cloud Server"}</span>
+              <span className="text-xs text-indigo-400 font-bold block">{isAr ? "الخادم المركزي" : "Central Cloud Server"}</span>
               <div className="text-sm font-black">PostgreSQL Main Server</div>
-              <span className="text-[10px] text-emerald-400 font-bold block">{isAr ? "مزامنة البيانات عند الاتصال" : "Cloud sync ready"}</span>
+              <span className="text-xs text-emerald-400 font-bold block">{isAr ? "مزامنة البيانات عند الاتصال" : "Cloud sync ready"}</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full pt-2">
               <div className="bg-slate-50 dark:bg-white/[0.02] border border-slate-150 dark:border-slate-800 p-4 rounded-xl text-center space-y-1">
                 <span className="text-xs font-black text-slate-800 dark:text-slate-200 block">{isAr ? "كاشير المحل (محلي)" : "Local Cashier POS"}</span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 block">{isAr ? "قاعدة بيانات محلية سريعة" : "Local SQLite DB"}</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400 block">{isAr ? "قاعدة بيانات محلية سريعة" : "Local SQLite DB"}</span>
               </div>
               <div className="bg-slate-50 dark:bg-white/[0.02] border border-slate-150 dark:border-slate-800 p-4 rounded-xl text-center space-y-1">
                 <span className="text-xs font-black text-slate-800 dark:text-slate-200 block">{isAr ? "إدارة المخزن والورديات" : "Stock & Shifts"}</span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 block">{isAr ? "تحديث تلقائي عند الاتصال" : "Automatic update on reconnect"}</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400 block">{isAr ? "تحديث تلقائي عند الاتصال" : "Automatic update on reconnect"}</span>
               </div>
             </div>
           </div>
@@ -1333,7 +1683,7 @@ export default function LandingPage() {
                 }`}
               >
                 <span>{t.yearly}</span>
-                <span className="text-[10px] bg-emerald-500 text-white px-1.5 py-0.2 rounded-full">{t.savePercent}</span>
+                <span className="text-xs bg-emerald-500 text-white px-2 py-0.5 rounded-full">{t.savePercent}</span>
               </button>
             </div>
           </div>
@@ -1381,8 +1731,9 @@ export default function LandingPage() {
                   }`}
                 >
                   {isPopular && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#1F41AD] text-white text-[10px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md">
-                      {t.popularBadge}
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#1F41AD] text-white text-xs font-black uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md flex items-center gap-1.5">
+                      <Star className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+                      <span>{t.popularBadge}</span>
                     </span>
                   )}
 
@@ -1397,10 +1748,10 @@ export default function LandingPage() {
                     </div>
 
                     <div className={`flex items-baseline gap-1.5 pb-6 border-b ${isPopular ? "border-slate-800" : "border-slate-100 dark:border-slate-800"}`}>
-                      <span className="text-4xl font-black font-mono text-[#1F41AD] dark:text-indigo-400">
+                      <span className={`text-4xl font-black font-mono ${isPopular ? "text-white" : "text-[#1F41AD] dark:text-blue-400"}`}>
                         {displayPrice}
                       </span>
-                      <span className="text-[11px] font-bold text-slate-400">
+                      <span className="text-xs font-bold text-slate-400">
                         {billingCycle === "yearly" ? (isAr ? "ج.م / شهرياً (دفع سنوي)" : "EGP / Mo (billed annually)") : (isAr ? "ج.م / شهرياً" : "EGP / Mo")}
                       </span>
                     </div>

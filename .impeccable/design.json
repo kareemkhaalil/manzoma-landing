@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T12:07:45Z",
+  "title": "Design System: Manzoma ERP",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Electric Brand Blue",
+        "canonical": "#3B5BFF",
+        "tonalRamp": ["#081033", "#102166", "#1B3699", "#2A4FCC", "#3B5BFF", "#6884FF", "#9BB0FF", "#E6ECFF"]
+      },
+      "primary-deep": {
+        "role": "primary",
+        "displayName": "Command Deep Navy",
+        "canonical": "#0D1B4A",
+        "tonalRamp": ["#04091A", "#0D1B4A", "#172F7E", "#2244B3", "#305EE6", "#6185EB", "#A3BAF3", "#E3ECFC"]
+      },
+      "cta-emerald": {
+        "role": "secondary",
+        "displayName": "Profit Emerald",
+        "canonical": "#10B981",
+        "tonalRamp": ["#02261A", "#064E35", "#0A7B54", "#0D9F6C", "#10B981", "#34D399", "#6EE7B7", "#D1FAE5"]
+      },
+      "accent-cyan": {
+        "role": "secondary",
+        "displayName": "High-Tech Cyan Glow",
+        "canonical": "#00E5FF",
+        "tonalRamp": ["#00333A", "#006673", "#0099AC", "#00CCE5", "#00E5FF", "#4DF0FF", "#99F7FF", "#E5FDFF"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Crisp Page Canvas",
+        "canonical": "#FAFBFD",
+        "tonalRamp": ["#1E293B", "#334155", "#64748B", "#94A3B8", "#CBD5E1", "#E2E8F0", "#F1F5F9", "#FAFBFD"]
+      },
+      "dark-bg": {
+        "role": "neutral",
+        "displayName": "Dark Chamber Navy",
+        "canonical": "#0A192F",
+        "tonalRamp": ["#050C17", "#0A192F", "#112240", "#172A45", "#1F3A60", "#2D5185", "#5A7DB3", "#B3C6E5"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero title lines and primary conversion declarations."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings and pricing plan titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card headers and dialog titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Feature explanations, marketing copy, and table content."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Status pills, tags, and tabular figures."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-ambient",
+        "value": "0 1px 3px rgba(15, 23, 42, 0.05), 0 10px 15px -3px rgba(15, 23, 42, 0.04)",
+        "purpose": "Rest state for cards and containers"
+      },
+      {
+        "name": "elevated-hover",
+        "value": "0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04)",
+        "purpose": "Tactile lift state upon mouse hover"
+      },
+      {
+        "name": "glow-cyan",
+        "value": "0 0 30px rgba(0, 229, 255, 0.15)",
+        "purpose": "Accent glow for live sync and focal status indicators"
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default easing for micro-interactions and theme transitions"
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The high-conversion primary button reserved for purchase, trial, and primary commitments.",
+      "html": "<button class=\"ds-btn-primary\">ابدأ تجربتك المجانية</button>",
+      "css": ".ds-btn-primary { background: #10B981; color: #FFFFFF; font-family: Inter, Cairo, sans-serif; font-size: 15px; font-weight: 700; padding: 14px 28px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2); } .ds-btn-primary:hover { background: #059669; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3); } .ds-btn-primary:focus-visible { outline: 2px solid #3B5BFF; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined button for secondary exploration or sales inquiries.",
+      "html": "<button class=\"ds-btn-secondary\">تواصل مع المبيعات</button>",
+      "css": ".ds-btn-secondary { background: #FFFFFF; color: #0F172A; font-family: Inter, Cairo, sans-serif; font-size: 15px; font-weight: 600; padding: 14px 28px; border: 1px solid #E2E8F0; border-radius: 12px; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-secondary:hover { background: #F8FAFC; border-color: #CBD5E1; transform: translateY(-1px); } .ds-btn-secondary:focus-visible { outline: 2px solid #3B5BFF; outline-offset: 2px; }"
+    },
+    {
+      "name": "Live Status Badge",
+      "kind": "chip",
+      "refersTo": "badge-status",
+      "description": "Pill indicator showing system updates, live sync status, or feature highlights.",
+      "html": "<div class=\"ds-badge\"><span class=\"ds-badge-dot\"></span><span class=\"ds-badge-text\">تحديث جديد: فواتير الواتساب متاحة الآن</span></div>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 9999px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); font-family: Inter, Cairo, sans-serif; } .ds-badge-dot { width: 8px; height: 8px; border-radius: 9999px; background: #10B981; } .ds-badge-text { font-size: 12px; font-weight: 700; color: #475569; }"
+    },
+    {
+      "name": "Feature Card",
+      "kind": "card",
+      "refersTo": "card-feature",
+      "description": "Container for core product pillars and enterprise engines.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">محرك الواتساب التسويقي</h3><p class=\"ds-card-desc\">أرسل فواتيرك وحملاتك التسويقية بضغطة زر مباشرة لعملائك دون وسيط خارجي.</p></div>",
+      "css": ".ds-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 28px; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); font-family: Inter, Cairo, sans-serif; } .ds-card:hover { border-color: #3B5BFF; transform: translateY(-3px); box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08); } .ds-card-title { font-size: 20px; font-weight: 800; color: #0F172A; margin: 0 0 10px 0; } .ds-card-desc { font-size: 14px; color: #64748B; line-height: 1.6; margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Modern Merchant's High-Tech Command",
+    "overview": "The Manzoma visual system is built for the decisive, fast-paced merchant who demands uncompromising speed, airtight financial control, and modern elegance. It moves away from sterile, drab enterprise accounting tables and outdated blue-gray legacy software toward an energetic, radiant, and reassuring experience. The system blends deep, commanding navy depths (#0D1B4A) with electric brand blues (#3B5BFF), crisp white functional cards, and high-conversion emerald CTA accents (#10B981) that signify profitability and swift action.",
+    "keyCharacteristics": [
+      "Decisive Contrast: Deep navy headers anchor attention; high-contrast typography ensures readability in bright retail sunlight.",
+      "Luminous Precision: Ambient radial cyan and violet glows paired with subtle technical grid patterns reflect advanced AI and real-time sync.",
+      "Tactile Confidence: High-elevation hover lifts, crisp borders, and purposeful emerald micro-interactions make every action feel responsive and confirmed.",
+      "RTL-Native Craft: Layouts, icons, indicators, and animations flow seamlessly from right to left with typographic harmony in both Arabic (Cairo) and Latin (Inter) scripts."
+    ],
+    "rules": [
+      {
+        "name": "The Single CTA Voice Rule",
+        "body": "Emerald (#10B981) is reserved exclusively for the single highest-value action on any viewport. Secondary actions must step down to neutral slate or outlined glass.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ambient Glow Rule",
+        "body": "Luminous radial glows (blur(150px)) and cyan text shimmers are used as atmospheric backdrops only; they never sit behind low-contrast body text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Metric Rule",
+        "body": "All financial amounts, quantity counts, and barcode sequences must render with tabular figures (font-variant-numeric: tabular-nums) so decimal points align vertically across invoices and data tables.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "body": "Interactive cards and buttons must sit calm at rest with subtle 1px border containment. Shadows bloom only upon mouse hover or focus-visible state to signal readiness.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use standard SVG icons (Lucide React) with a consistent 20px / 24px stroke across all cards and buttons.",
+      "Do maintain RTL-first alignment for all Arabic content, placing chevron indicators on the left (ChevronLeft) to reflect forward progression.",
+      "Do enforce tabular numbers (tabular-nums) on all invoice prices, quantities, and barcode displays.",
+      "Do test light mode and dark mode side-by-side to guarantee WCAG AA contrast (>= 4.5:1).",
+      "Do respect prefers-reduced-motion by disabling float keyframes and large scale animations for sensitive users."
+    ],
+    "donts": [
+      "Don't use emojis as interface icons (e.g. 🚀, 💰, 📦). Always use dedicated Lucide SVG icons.",
+      "Don't create pure black backgrounds (#000000). Use rich deep navy tones (#0A192F and #112240) to preserve depth and reduce glare.",
+      "Don't place green CTA colors on secondary or cancel actions. Green is exclusively for positive conversion.",
+      "Don't allow layout shifts on hover. Never scale card dimensions; only transform translateY or animate shadows and borders.",
+      "Don't hide critical business proof (offline status, encryption, live sync) behind ambiguous generic marketing slogans."
+    ]
+  }
+}

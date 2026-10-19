@@ -39,3 +39,10 @@ Thumbs.db
 .vscode/
 .idea/
 coverage/
+
+# 🤖 Agent Local Caches
+.cursor/
+.gemini/
+.codex/
+.grok/
+

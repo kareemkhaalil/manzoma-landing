@@ -10,46 +10,48 @@ export const translations = {
     languageName: "العربية",
 
     // SEO Meta
-    seoTitle: "برنامج كاشير ومخازن للمحلات | يعمل بدون إنترنت | منظومة",
-    seoDescription: "منظومة برنامج كاشير ومخازن للمحلات يساعدك على البيع وإدارة الأصناف والورديات حتى عند ضعف الإنترنت. شاهد الديمو وتعرّف على النظام.",
+    seoTitle: "نظام متكامل لإدارة نقاط البيع والمخازن والحسابات | منظومة",
+    seoDescription: "منظومة نظام متكامل لإدارة نقاط البيع والمخزون والفروع. كاشير سريع ومستقر، جرد فوري للمستودعات، مصفوفة المقاسات والألوان، وتقارير أرباح لحظية على هاتفك.",
 
     // Hero Section
-    heroBadge: "مناسب للمحلات التي تبيع من الكاشير وتحتاج متابعة للمخزون والورديات",
-    heroHeadlinePart1: "برنامج كاشير ومخازن للمحلات —",
-    heroHeadlinePart2: "بيعك ما يقفش لو النت قطع.",
-    heroSubtitle: "بيع أسرع، مخزون أوضح، وفواتير مرتبة لمحلات الملابس والأحذية والمستلزمات المنزلية. يعمل محلياً عند انقطاع الإنترنت، ويزامن البيانات عند عودة الاتصال.",
-    heroCTADemo: "شاهد ديمو في 60 ثانية",
-    heroCTAContact: "تحدث مع فريق منظومة",
-    heroCTAStart: "إنشاء حساب تجريبي",
-    heroTrust1: "البيع يستمر محلياً عند انقطاع الإنترنت",
-    heroTrust2: "سجل أوضح للخصومات والورديات",
-    heroTrust3: "تتم المزامنة عند عودة الاتصال",
+    heroBadge: "نظام متكامل لإدارة نقاط البيع، المخازن، والحسابات السحابية",
+    heroHeadlinePart1: "نظام متكامل لإدارة نقاط البيع —",
+    heroHeadlinePart2: "والمخازن والمبيعات بدون تعقيد.",
+    heroSubtitle: "حل احترافي شامل صُمم لإدارة متاجر التجزئة ومحلات الملابس والأنشطة التجارية. كاشير سريع ومستقر يعمل محلياً دون توقف، مصفوفة متطورة للمقاسات والألوان، جرد فوري للمستودعات، وتقارير أرباح ووردية دقيقة تصلك على هاتفك لحظة بلحظة.",
+    heroCTADemo: "طلب ديمو توضيحي",
+    heroCTAContact: "تواصل مع المبيعات",
+    heroCTAStart: "ابدأ تجربتك المجانية",
+    heroTrust1: "استقرار فوري لنقاط البيع يعمل محلياً دون توقف",
+    heroTrust2: "لوحة تحكم سحابية ومتابعة لحظية من الموبايل",
+    heroTrust3: "دعم فني معتمد وتدريب مجاني لفريق عملك",
 
     // Tapes
     tapeItems: [
-      "البيع يستمر عند انقطاع الإنترنت",
-      "تكويد المقاسات والألوان والباركود",
-      "فواتير واتساب رقمية وسريعة",
-      "تقفيل الورديات ومطابقة الخزينة",
-      "تسجيل حركات المخزون بدقة",
-      "مزامنة البيانات عند عودة الاتصال"
+      "نظام نقاط بيع متكامل ومستقر",
+      "مصفوفة متقدمة للمقاسات والألوان والباركود",
+      "فواتير واتساب إلكترونية وحملات تسويقية",
+      "مساعد ذكاء اصطناعي عبر تليجرام للمبيعات والأرباح",
+      "تقفيل دقيق للورديات ومطابقة الخزائن (Z-Report)",
+      "جرد سريع للمستودعات عبر السكانر والإكسيل",
+      "إدارة الفروع المتعددة والتحويلات المخزنية",
+      "تعدد وتعليق الفواتير في نفس اللحظة (Multi-Cart)"
     ],
 
     // Showcase / لماذا منظومة
-    whyTitle: "لماذا منظومة؟",
-    whySubtitle: "3 نتائج ملموسة تساعدك على تنظيم نشاطك التجاري اليومي بدون تعقيد.",
+    whyTitle: "حلول متكاملة تمنحك السيطرة الكاملة على أعمالك",
+    whySubtitle: "منظومة واحدة تجمع كل ما تحتاجه لإدارة البيع، المخزون، والعملاء بأعلى كفاءة وموثوقية.",
     whyOutcomes: [
       {
-        title: "البيع يستمر عند ضعف الاتصال",
-        desc: "يعمل الكاشير محلياً على جهازك بسرعة فائقة دون توقف حتى عند انقطاع الإنترنت، وتتم المزامنة تلقائياً عند عودة الاتصال."
+        title: "استقرار وسرعة فائقة لنقاط البيع (POS)",
+        desc: "يعمل الكاشير محلياً على جهازك بسرعة استجابة لحظية دون تأخير حتى عند ضعف أو انقطاع الإنترنت، مع مزامنة سحابية تلقائية فور توفر الاتصال."
       },
       {
-        title: "مقاسات وألوان وباركود للمحلات المناسبة",
-        desc: "تكويد سريع لأصناف الملابس والأحذية بالمقاسات والألوان، وطباعة ملصقات الباركود بضغطة زر واحدة."
+        title: "إدارة دقيقة للمخزون ومصفوفة المقاسات والألوان",
+        desc: "تكويد متطور لموديلات الملابس والأحذية بإنشاء مصفوفة الألوان والمقاسات وطباعة ملصقات الباركود بضغطة زر، مع جرد مرن بالسكانر أو الإكسيل دون إيقاف حركة البيع."
       },
       {
-        title: "ورديات وخصومات وحركة مخزون أوضح",
-        desc: "تسجيل كل حركة بيع وخصم وتعديل باسم المستخدم، مع تقفيل دقيق لورديات الكاشير ومطابقة الخزينة."
+        title: "رقابة مالية ومساعد ذكاء اصطناعي في جيبك",
+        desc: "تقفيل يومي وورديات دقيق يطابق النقدية بالدرج مع الحسابات، مع تقارير تفصيلية ومساعد ذكي يزودك بأرقام الأرباح والديون عبر هاتفك وتليجرام."
       }
     ],
 
@@ -113,6 +115,22 @@ export const translations = {
     feat3Title: "تقفيل الوردية ومطابقة النقدية",
     feat3Desc: "تسجيل المبالغ النقدية عند إغلاق الوردية لمقارنتها بالرصيد المسجل بالنظام وتوثيق أي فروقات.",
 
+    featAiBadge: "مساعد الذكاء الاصطناعي 🤖",
+    featAiTitle: "مساعد تليجرام الذكي للأرباح والمبيعات",
+    featAiDesc: "اسأل النظام صوتياً أو كتابياً من أي مكان: 'أرباح اليوم كام؟'، 'مين الموردين اللي ليهم فلوس؟'، ويصلك الرد لحظياً بتحليل دقيق.",
+
+    featDesignerBadge: "المصمم المرئي 🎨",
+    featDesignerTitle: "تصميم الفواتير والباركود المخصص",
+    featDesignerDesc: "تحكم كامل بشكل ومقاس فاتورة الكاشير وإضافة شعار متجرك وبياناتك الضريبية، وتصميم ملصقات باركود الملابس والأحذية حسب احتياجك.",
+
+    featStocktakeBadge: "محرك الجرد الشامل 📦",
+    featStocktakeTitle: "جرد سريع بالسكانر أو الإكسيل دون إيقاف البيع",
+    featStocktakeDesc: "جرد المستودعات والأرفف قسماً بقسم بواسطة قارئ الباركود أو سحب وتصدير شيتات الإكسيل، مع استمرار حركة البيع دون الحاجة لإغلاق المحل.",
+
+    featMultiCartBadge: "تعدد الفواتير ⚡",
+    featMultiCartTitle: "تعليق وفتح فواتير متعددة في نفس اللحظة",
+    featMultiCartDesc: "خدمة عدة عملاء بالتوازي دون تعطيل الطابور؛ يمكنك تعليق فاتورة العميل الذي يستكمل مشترياته ومحاسبة العميل التالي بضغطة زر واحدة.",
+
     // Comparison Matrix
     compareTitle: "مقارنة دقيقة: منظومة والبدائل",
     compareSubtitle: "تعرّف على الفارق العملي بين منظومة والحلول اليدوية أو البرامج القديمة.",
@@ -146,8 +164,8 @@ export const translations = {
     pricingSubtitle: "أسعار واضحة وباقات مرنة تناسب حجم نشاطك مع تجربة مجانية لمدة 14 يوماً.",
     monthly: "دفع شهري",
     yearly: "دفع سنوي",
-    savePercent: "خصم 20% 🔥",
-    popularBadge: "الباقة الأكثر ملاءمة ⭐",
+    savePercent: "خصم 20%",
+    popularBadge: "الباقة الأكثر طلباً",
     priceSuffix: "جنيه / شهرياً",
     priceSuffixYearly: "جنيه / شهرياً (دفع سنوي)",
     trialButton: "ابدأ تجربتك المجانية",
@@ -525,6 +543,22 @@ export const translations = {
     feat3MockBook: "System Book Balance:",
     feat3MockPhysical: "Physical Cash Count:",
     feat3MockWarn: "⚠️ Deficit Found in Register:",
+
+    featAiBadge: "AI Assistant 🤖",
+    featAiTitle: "Smart Telegram Assistant for Sales & Profits",
+    featAiDesc: "Ask the system anytime by voice or text: 'What are today's profits?' or 'Which suppliers have pending dues?', and receive instant accurate breakdowns.",
+
+    featDesignerBadge: "Visual Designer 🎨",
+    featDesignerTitle: "Custom Invoice & Barcode Label Designer",
+    featDesignerDesc: "Full drag-and-drop control over thermal receipt sizes, custom logos, tax QR codes, and fashion barcode stickers tailored to your brand.",
+
+    featStocktakeBadge: "Comprehensive Stocktaking 📦",
+    featStocktakeTitle: "Continuous Stocktaking via Scanner or Excel",
+    featStocktakeDesc: "Audit shelf and warehouse inventory section-by-section using wireless scanners or Excel spreadsheets without closing your store.",
+
+    featMultiCartBadge: "Multi-Cart Hold ⚡",
+    featMultiCartTitle: "Hold and Manage Multiple Invoices Concurrently",
+    featMultiCartDesc: "Serve multiple rush-hour shoppers simultaneously without line delays by putting carts on hold with a single click.",
 
     // Comparison Matrix
     compareTitle: "Strategic Comparison for Manzoma ERP",
